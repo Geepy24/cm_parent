@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.cm.domain">
+		<class name="Resource" table="resource">
+			<id name="resId" column="res_id">
+				<generator class="native"></generator>
+			</id>
+			<property name="resTag" column="res_tag"></property>
+			<property name="resCom" column="res_com"></property>
+			<!-- <property name="userId" column="user_id"></property> -->
+			<property name="adsId" column="ads_id"></property>
+			<property name="pubTime" column="pub_time"></property>
+			<!-- name是在Resource中引用的对象的名字 -->
+			<!-- class是外键所在实体类的名字 -->
+			<!-- column是外键名 -->
+			<!-- unique表示唯一限制，将多对一变成了一对一 -->
+			<!-- resource作为picture和movie的主表 -->
+			<many-to-one name="picture" class="Picture" column="pic_id" unique="true" cascade="save-update,delete"  lazy="false" fetch="join"></many-to-one>
+			<many-to-one name="movie" class="Movie" column="mov_id" unique="true" cascade="save-update,delete"  lazy="false" fetch="join"></many-to-one>
+		
+			<!-- 一个user有多个resource,resource作为User的从表,从表中多出一个外键指向user的主键 -->
+			<many-to-one name="user" class="User" column="res_user_id" cascade="save-update" lazy="false"></many-to-one>
+		
+		</class>
+</hibernate-mapping>
