@@ -6,22 +6,53 @@ import com.cm.domain.User;
 
 public interface IUserDao {
 	
-	//Í¨¹ıid²éÕÒ
+	/**
+	 * é€šè¿‡idæŸ¥æ‰¾
+	 * @param userId
+	 * @return
+	 */
 	User findUserById(int userId);
-	//Í¨¹ıÓÃ»§Ãû²éÕÒ
+	/**
+	 * é€šè¿‡ç”¨æˆ·åæŸ¥æ‰¾
+	 * @param userName
+	 * @return
+	 */
 	User findUserByName(String userName);
-	//²éÕÒËùÓĞ
+	/**
+	 * æŸ¥æ‰¾æ‰€æœ‰
+	 * @return
+	 */
 	List<User> findAllUsers();
-	//±£´æÓÃ»§
+	/**
+	 * ä¿å­˜ç”¨æˆ·
+	 * @param user
+	 */
 	void saveUser(User user);
-	//É¾³ıÓÃ»§
+	/**
+	 * åˆ é™¤ç”¨æˆ·
+	 * @param user
+	 */
 	void deleteUser(User user);
-	//¼ì²éÓÃ»§ÊÇ·ñ¹ÜÀíÔ±
+	/**
+	 * æ£€æŸ¥ç”¨æˆ·æ˜¯å¦ç®¡ç†å‘˜
+	 * @param userId
+	 * @return
+	 */
 	boolean isAds(int userId) ;
-	//¸üĞÂÓÃ»§
+	/**
+	 * æ›´æ–°ç”¨æˆ·
+	 * @param user
+	 */
 	void updateUser(User user);
-	//Í¨¹ıidÉ¾³ıÓÃ»§
+	/**
+	 * é€šè¿‡idåˆ é™¤ç”¨æˆ·
+	 * @param userId
+	 */
 	void deleteById(int userId);
-	//Í¨¹ıÓÃ»§ÃûÅĞ¶ÏÓÃ»§ÊÇ·ñ´æÔÚ
+	/**
+	 * é€šè¿‡ç”¨æˆ·ååˆ¤æ–­ç”¨æˆ·æ˜¯å¦å­˜åœ¨
+	 * @param userName
+	 * @return
+	 */
 	boolean isUserExist(String userName);
 }

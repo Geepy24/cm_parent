@@ -10,10 +10,8 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cm.domain.User;
-import com.cm.service.IUserService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import net.sf.json.JSONObject;
 @ParentPackage("json-default")
@@ -22,29 +20,20 @@ import net.sf.json.JSONObject;
 	@Result(name="success",location="/jsp/login.jsp")
 })
 public class userRegister extends ActionSupport implements Serializable ,ModelDriven<User>{
-//	private String userName ;
+	
+	private static final long serialVersionUID = 1L;
 	private User user  ;
 	@Autowired
-	private IUserService userService ; 
-	//·µ»ØµÄjsonÊı¾İ
+	//è¿”å›çš„jsonæ•°æ®
 	private JSONObject returndata ; 
 	
-
-	//Ä£ĞÍÇı¶¯
 	@Override
 	public User getModel() {
 		return user;
 	}
 	
 //----------getter and setter-------------------------
-//	public String getUserName() {
-//		return userName;
-//	}
-//
-//
-//	public void setUserName(String userName) {
-//		this.userName = userName;
-//	}
+
 	public JSONObject getReturndata() {
 		return returndata;
 	}
@@ -70,12 +59,11 @@ public class userRegister extends ActionSupport implements Serializable ,ModelDr
 	@Action(value="registerAction",results= {@Result(name="success",type="json")},
 				params={"root","returndata"})
 	public String register() {
-		System.out.println("×¢²á½ÓÊÕÇëÇó");
-		System.out.println("Ç°¶Ë´«»Ø£º"+user);
-		//±£´æÕı³£
-		//userService.saveUser(user);
+		System.out.println("æ³¨å†Œæ¥æ”¶è¯·æ±‚");
+		System.out.println("å‰ç«¯ä¼ å›ï¼š"+user);
+		//ä¿å­˜æ­£å¸¸
 		
-		//´«»Øjson¶ÔÏó
+		//ä¼ å›jsonå¯¹è±¡
 		String str = "{\"returndata\" : \"registerSuccess\"}" ;
 		returndata = JSONObject.fromObject(str) ;
 		return SUCCESS ;

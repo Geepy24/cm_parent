@@ -5,123 +5,128 @@ import java.util.List;
 import com.cm.domain.Article;
 import com.cm.domain.Draft;
 import com.cm.domain.Dustbin;
-import com.cm.domain.MovieCheck;
-import com.cm.domain.PictureCheck;
-import com.cm.domain.User;
 
 public interface IArticleDao {
 	/**
-	 * 	±£´æÎÄÕÂ
+	 * 	ä¿å­˜æ–‡ç« 
 	 */
 	void saveArticle(Article article) ;
 	/**
-	 * 	É¾³ıÎÄÕÂ
+	 * 	åˆ é™¤æ–‡ç« 
 	 */
 	void deleteArticle(Article article) ;
 	/**
-	 * 	ĞŞ¸ÄÎÄÕÂ
+	 * 	æ›´æ–°æ–‡ç« 
 	 */
 	void updateArticle(Article article) ;
-	/**Í¨¹ıid²éÕÒÎÄÕÂ
-	 * 
+	/**
+	 * é€šè¿‡æ–‡ç« idæŸ¥æ‰¾æ–‡ç« 
 	 */
 	Article findById(int articleId) ;
 	/**
-	 * 	Í¨¹ı±êÌâ²éÕÒÎÄÕÂ
+	 * 	é€šè¿‡æ–‡ç« æ ‡é¢˜æŸ¥æ‰¾æ–‡ç« 
 	 */
 	Article findByTitle(String articleTitle) ;
 	/**
-	 * 	Í¨¹ı×÷Õß²éÕÒÎÄÕÂ
+	 *  é€šè¿‡ä½œè€…æŸ¥æ‰¾ä½œè€…çš„æ‰€æœ‰æ–‡ç« ï¼ˆæ— åˆ†é¡µï¼‰
 	 */
 	List<Article> findByAuthor(String author) ;
 	/**
-	 * 	²éÕÒËùÓĞÎÄÕÂ
+	 * 	æŸ¥æ‰¾æ‰€æœ‰æ–‡ç« ï¼ˆæ— åˆ†é¡µï¼‰
 	 */
 	List<Article> findAllArticle() ;
 	/**
-	 * 	·ÖÒ³²éÕÒÎÄÕÂ
+	 * 	åˆ†é¡µæŸ¥æ‰¾æ‰€æœ‰æ–‡ç« 
 	 */
 	List<Article> findAllArticle(Integer currentPage,Integer maxResults ) ;
 	/**
-	 * ²éÕÒÎÄÕÂÖ¸¶¨µÄÄÚÈİ
-	 * @return ·µ»Ø10Ìõµ¹ĞòµÄÄÚÈİ
+	 * æŸ¥æ‰¾æ–‡ç« æŒ‡å®šå†…å®¹ï¼Œå€’å™è¿”å›åæ¡
 	 */
 	List<String> find(String content) ;
 	/**
-	 * ²éÕÒÎÄÕÂ×ÜÊı
+	 * æŸ¥æ‰¾æ‰€æœ‰æ–‡ç« æ€»æ•°
 	 */
 	Long AllArticleNumber();
+	/**
+	 * æŸ¥æ‰¾æŒ‡å®šç”¨æˆ·çš„æ‰€æœ‰æ–‡ç« æ€»æ•°
+	 */
 	Long AllArticleNumber(Integer userId);
 	/**
-	 * ·ÖÒ³²éÕÒÖ¸¶¨ÓÃ»§µÄËùÓĞÎÄÕÂ£¬Ã¿Ò³10Ìõ
+	 * åˆ†é¡µæŸ¥æ‰¾ç”¨æˆ·çš„æ‰€æœ‰æ–‡ç« 
 	 */
 	public List<Article> findByUser(Article article,Integer currentPage,Integer maxResults);
-//---------------²İ¸åÏäµÄ²Ù×÷------------------
+//---------------è‰ç¨¿ç®±æ“ä½œ------------------
 	
 	/**
-	 * ±£´æÖÁ²İ¸åÏä
+	 * ä¿å­˜è‰ç¨¿
 	 */
 	void saveDraft(Draft draft) ;
 	/**
-	 * 	¸ù¾İId²éÕÒ²İ¸å
+	 * 	é€šè¿‡è‰ç¨¿idæŸ¥æ‰¾è‰ç¨¿
 	 * @param draId
 	 */
 	Draft findDraftById(int draId);
 	/**
-	 * ¸ù¾İId·ÖÒ³²éÕÒËùÓĞ²İ¸å
+	 * æ ¹æ®ç”¨æˆ·åˆ†é¡µæŸ¥æ‰¾æ‰€æœ‰è‰ç¨¿
 	 */
 	List<Draft> findAllDraft(Draft draft,Integer currentPage,Integer maxResults);
 	/**
-	 * ¸ù¾İId²éÕÒ²İ¸å×ÜÊı
+	 * æ ¹æ®ç”¨æˆ·IdæŸ¥æ‰¾è‰ç¨¿æ€»æ•°
 	 * @param authorId
 	 * @return
 	 */
 	Long AllDraftNumber(Integer authorId);
 	/**
-	 * É¾³ı²İ¸å
+	 * æ›´æ–°è‰ç¨¿
+	 * @param draft
+	 */
+	void updateDraft(Draft draft);
+	/**
+	 * 	åˆ é™¤æ‰€æœ‰è‰ç¨¿
 	 */
 	void deleteDraft(Integer draId) ;
 	
 	
-	//---------------------²İ¸åÏä²Ù×÷-------------------
+	//---------------------å›æ”¶ç«™æ“ä½œ-------------------
 	/**
-	 *  ±£´æ²İ¸åÏä²Ù×÷
+	 *  ä¿å­˜
 	 * @param dustbin
 	 */
 	void saveDustbin(Dustbin dustbin);
 	/**
-	 * 	·ÖÒ³²éÕÒËùÓĞDustbin
+	 * åˆ†é¡µæŸ¥æ‰€æœ‰
 	 */
 	List<Dustbin> findAllDustbin(Integer currentPage, Integer MAXRESULTS);
 	/**
-	 * ËùÓĞdustbin×ÜÊı
+	 * æŸ¥æ‰¾å›æ”¶ç«™æ–‡ç« æ€»æ•°
 	 */
 	Long AllDustbinNumber() ;
+	/**
+	 * æŸ¥æ‰¾æŒ‡å®šç”¨æˆ·çš„å›æ”¶ç«™æ–‡ç« æ€»æ•°
+	 * @param userId
+	 * @return
+	 */
 	Long AllDustbinNumber(Integer userId);
 	/**
-	 * 	³¹µ×É¾³ı
+	 * åˆ é™¤
 	 * @param dustId
 	 */
 	void deleteDustbin(Integer dustId);
 	/**
-	 * Í¨¹ıid²éÕÒ
+	 * é€šè¿‡å›æ”¶ç«™æ–‡ç« idæŸ¥æ‰¾
 	 * @param dustId
 	 * @return
 	 */
 	Dustbin findDustbinById(Integer dustId) ;
 	/**
-	 * Í¨¹ıÓÃ»§²éÕÒÓÃ»§µÄ»ØÊÕÕ¾
+	 * åˆ†é¡µæŸ¥æ‰¾ç”¨æˆ·çš„å›æ”¶ç«™æ–‡ç« æ€»æ•°
 	 * @param user
 	 * @param currentPage
 	 * @param maxresults
 	 * @return
 	 */
 	List<Dustbin> findAllDustbinByUser(Dustbin dustbin, Integer currentPage, Integer maxresults);
-	/**
-	 * ĞŞ¸Ä²İ¸å
-	 * @param draft
-	 */
-	void updateDraft(Draft draft);
+	
 	
 	
 	

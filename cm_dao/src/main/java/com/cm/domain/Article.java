@@ -2,12 +2,14 @@ package com.cm.domain;
 
 import java.io.Serializable;
 /**
- * ÎÄÕÂµÄÊµÌåÀà
+ * æ–‡ç« è¡¨
  * @author Huangjiping
  *
  */
 public class Article implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1L;
 	private int artId ;
 	private String artTitle ;
 	private String artContent ;
@@ -17,7 +19,7 @@ public class Article implements Serializable {
 	private String pubTime ;
 	private String lastMod ;
 	
-	//¶à¶ÔÒ»£¬artId×÷ÎªÍâ¼ü
+	//å¤–é”®å­—æ®µ
 	private User user ;
 	
 	

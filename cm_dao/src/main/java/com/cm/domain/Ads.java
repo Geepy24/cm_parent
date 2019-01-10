@@ -2,15 +2,17 @@ package com.cm.domain;
 
 import java.io.Serializable;
 /**
- * 	管理员表
+ * 	绠＄悊鍛樿〃
  * @author Huangjiping
  *
  */
 public class Ads implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private int adsId ;
 	private String adsName ;
-	private int userId ;  //用于存放是管理员的用户的ID
+	private int userId ;  //绠＄悊鍛樺悓鏃舵槸鐢ㄦ埛
 	
 	
 

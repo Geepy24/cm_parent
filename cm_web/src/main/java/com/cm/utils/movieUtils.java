@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ´¦ÀíÊÓÆµµÄÀà
+ * å¤„ç†è§†é¢‘çš„ç±»
  * @author mac
  *
  */
@@ -13,39 +13,40 @@ public class movieUtils {
 	public static final String ffmpegPath = "/usr/local/Cellar/ffmpeg/4.1_1/bin/ffmpeg" ; 
 	
 	
-/**
- * ½ØÈ¡ÊÓÆµµÄËõÂÔÍ¼£¬²¢´æ·Åµ½ÏàÓ¦ÎÄ¼ş¼Ğ
- * @param ffmpeg : ffmpeg.exeµÄÎ»ÖÃ
- * @param upFilePath : Òª´¦ÀíµÄÊÓÆµÎÄ¼şµÄÎ»ÖÃ
- * @param mediaPicPath 	: ËõÂÔÍ¼´æ·ÅµÄÎ»ÖÃ
- */
+	/**
+	 * æˆªå–è§†é¢‘çš„ç¼©ç•¥å›¾ï¼Œå¹¶å­˜æ”¾åˆ°ç›¸åº”æ–‡ä»¶å¤¹
+	 * @param ffmpeg : ffmpeg.exeçš„ä½ç½®
+	 * @param upFilePath : è¦å¤„ç†çš„è§†é¢‘æ–‡ä»¶çš„ä½ç½®
+	 * @param mediaPicPath 	: ç¼©ç•¥å›¾å­˜æ”¾çš„ä½ç½®
+	 */
 	
 	public static void handler(String ffmpegPath,String upFilePath,String mediaPicPath) {
 		List<String> cutpic = new ArrayList<>(); 
-		cutpic.add(ffmpegPath);// ÊÓÆµÌáÈ¡¹¤¾ßµÄÎ»ÖÃ 
-		cutpic.add("-i"); // Ìí¼Ó²ÎÊı£¢-i£¢£¬¸Ã²ÎÊıÖ¸¶¨Òª×ª»»µÄÎÄ¼ş 
-		cutpic.add(upFilePath); // ÊÓÆµÎÄ¼şÂ·¾¶ 
+		cutpic.add(ffmpegPath);// è§†é¢‘æå–å·¥å…·çš„ä½ç½®
+		cutpic.add("-i"); // æ·»åŠ å‚æ•°ï¼‚-iï¼‚ï¼Œè¯¥å‚æ•°æŒ‡å®šè¦è½¬æ¢çš„æ–‡ä»¶ 
+		cutpic.add(upFilePath); // è§†é¢‘æ–‡ä»¶è·¯å¾„ 
 		cutpic.add("-y"); 
 		cutpic.add("-f"); 
 		cutpic.add("image2"); 
-		cutpic.add("-ss"); // Ìí¼Ó²ÎÊı£¢-ss£¢£¬¸Ã²ÎÊıÖ¸¶¨½ØÈ¡µÄÆğÊ¼Ê±¼ä 
-		cutpic.add("1"); // Ìí¼ÓÆğÊ¼Ê±¼äÎªµÚ1Ãë 
-		cutpic.add("-t"); // Ìí¼Ó²ÎÊı£¢-t£¢£¬¸Ã²ÎÊıÖ¸¶¨³ÖĞøÊ±¼ä 
-		cutpic.add("0.001"); // Ìí¼Ó³ÖĞøÊ±¼äÎª1ºÁÃë 
-		cutpic.add("-s"); // Ìí¼Ó²ÎÊı£¢-s£¢£¬¸Ã²ÎÊıÖ¸¶¨½ØÈ¡µÄÍ¼Æ¬´óĞ¡ 
-		cutpic.add("800*600"); // Ìí¼Ó½ØÈ¡µÄÍ¼Æ¬´óĞ¡Îª800*600 
-		cutpic.add(mediaPicPath); // Ìí¼Ó½ØÈ¡µÄÍ¼Æ¬µÄ±£´æÂ·¾¶
+		cutpic.add("-ss"); // æ·»åŠ å‚æ•°ï¼‚-ssï¼‚ï¼Œè¯¥å‚æ•°æŒ‡å®šæˆªå–çš„èµ·å§‹æ—¶é—´
+		cutpic.add("1"); // æ·»åŠ èµ·å§‹æ—¶é—´ä¸ºç¬¬1ç§’  
+		cutpic.add("-t"); // æ·»åŠ å‚æ•°ï¼‚-tï¼‚ï¼Œè¯¥å‚æ•°æŒ‡å®šæŒç»­æ—¶é—´ 
+		cutpic.add("0.001"); // æ·»åŠ æŒç»­æ—¶é—´ä¸º1æ¯«ç§’ 
+		cutpic.add("-s"); // æ·»åŠ å‚æ•°ï¼‚-sï¼‚ï¼Œè¯¥å‚æ•°æŒ‡å®šæˆªå–çš„å›¾ç‰‡å¤§å° 
+		cutpic.add("800*600"); // æ·»åŠ æˆªå–çš„å›¾ç‰‡å¤§å°ä¸º800*600
+		cutpic.add(mediaPicPath); // æ·»åŠ æˆªå–çš„å›¾ç‰‡çš„ä¿å­˜è·¯å¾„
 		
+		@SuppressWarnings("unused")
 		boolean mark = true;  
 		
-		//¸ÃÀàÆô¶¯Ó¦ÓÃ³ÌĞò
+		//è¯¥ç±»å¯åŠ¨åº”ç”¨ç¨‹åº
         ProcessBuilder builder = new ProcessBuilder();  
         try {  
 
             builder.command(cutpic);  
             builder.redirectErrorStream(true);  
-            // Èç¹û´ËÊôĞÔÎª true£¬ÔòÈÎºÎÓÉÍ¨¹ı´Ë¶ÔÏóµÄ start() ·½·¨Æô¶¯µÄºóĞø×Ó½ø³ÌÉú³ÉµÄ´íÎóÊä³ö¶¼½«Óë±ê×¼Êä³öºÏ²¢£¬  
-            //Òò´ËÁ½Õß¾ù¿ÉÊ¹ÓÃ Process.getInputStream() ·½·¨¶ÁÈ¡¡£ÕâÊ¹µÃ¹ØÁª´íÎóÏûÏ¢ºÍÏàÓ¦µÄÊä³ö±äµÃ¸üÈİÒ×  
+         // å¦‚æœæ­¤å±æ€§ä¸º trueï¼Œåˆ™ä»»ä½•ç”±é€šè¿‡æ­¤å¯¹è±¡çš„ start() æ–¹æ³•å¯åŠ¨çš„åç»­å­è¿›ç¨‹ç”Ÿæˆçš„é”™è¯¯è¾“å‡ºéƒ½å°†ä¸æ ‡å‡†è¾“å‡ºåˆå¹¶ï¼Œ  
+            //å› æ­¤ä¸¤è€…å‡å¯ä½¿ç”¨ Process.getInputStream() æ–¹æ³•è¯»å–ã€‚è¿™ä½¿å¾—å…³è”é”™è¯¯æ¶ˆæ¯å’Œç›¸åº”çš„è¾“å‡ºå˜å¾—æ›´å®¹æ˜“  
             builder.start();  
         } catch (Exception e) {  
             mark = false;  
@@ -54,6 +55,6 @@ public class movieUtils {
         }  
 
 	}	
-	//±£´æÍê±Ïºó¼ì²é¶ÔÓ¦ÎÄ¼ş¼ĞÊÇ·ñÓĞ¸ÃÎÄ¼ş£¬Ã»ÓĞµÄ»°¾ÍÅ×³öÒì³£
+	//ä¿å­˜å®Œæ¯•åæ£€æŸ¥å¯¹åº”æ–‡ä»¶å¤¹æ˜¯å¦æœ‰è¯¥æ–‡ä»¶ï¼Œæ²¡æœ‰çš„è¯å°±æŠ›å‡ºå¼‚å¸¸
 	
 }

@@ -76,7 +76,7 @@ public class ResourceServiceImpl implements IResourceService {
 	public Integer preResourceId(Integer resId,String tag) {
 		return resourceDao.preResourceId(resId,tag);
 	}
-//-----------------------------´ıÉóºËÊÓÆµ£¬Í¼Æ¬²Ù×÷-----------------------
+//-----------------------------å¾…å®¡æ ¸èµ„æº-----------------------
 	@Override
 	public void savePictureCheck(PictureCheck pictureCheck) {
 		resourceDao.savePictureCheck(pictureCheck);

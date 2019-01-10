@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class Resource implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private Integer resId ;
 	private String resTag ;
 	private String resCom ;
 	private String pubTime ;
 	private Integer adsId ;
-//	private Integer userId ;
-	//外键字段
+	//澶栭敭瀛楁
 	private Picture picture ;
 	private Movie movie ;
-	//多对一，resId作为外键
+	//澶氬涓�鍏崇郴
 	private User user ;
 	
 	public Integer getResId() {
@@ -41,13 +41,6 @@ public class Resource implements Serializable {
 		this.pubTime = pubTime;
 	}
 	
-	
-//	public Integer getUserId() {
-//		return userId;
-//	}
-//	public void setUserId(Integer userId) {
-//		this.userId = userId;
-//	}
 	public Picture getPicture() {
 		return picture;
 	}

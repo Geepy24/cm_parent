@@ -1,5 +1,7 @@
 package com.cm.web.action;
-
+/**
+ * å¯ä¸å…¶ä»–userç›¸å…³çš„åŠ¨ä½œç±»åˆå¹¶
+ */
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -9,7 +11,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import com.cm.domain.User;
 import com.cm.service.IUserService;
@@ -20,17 +21,19 @@ import com.opensymphony.xwork2.ModelDriven;
 @Namespace("/User")
 @Results({
 	@Result(name="edit1",location="/fail.jsp"),
-	@Result(name="success",type="chain",location="findAll"), //Ìø×ªµ½findAll.action
+	@Result(name="success",type="chain",location="findAll"), 
 	@Result(name="error",location="/fail.jsp")
 })
 /**
- * ĞŞ¸ÄÓÃ»§ĞÅÏ¢
+ * ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯
  * @author Huangjiping
  *
  */
 public class editAction extends ActionSupport implements ModelDriven<User>{
-	//Ä£ĞÍÇı¶¯
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	private User user = new User();
 	
 	@Autowired
@@ -46,23 +49,22 @@ public class editAction extends ActionSupport implements ModelDriven<User>{
 	
 	@Action("edit")
 	public String jumpEdit() {
-		System.out.println("Ä£ĞÍÇı¶¯½øÀ´£º"+user);
+		System.out.println("è¦ä¿®æ”¹çš„ç”¨æˆ·ï¼š"+user);
 		user = userService.findUserById(user.getUserId());
-		//°ÑÒªĞŞ¸ÄµÄÓÃ»§¶ÔÏó·Å½ørequestÓò
+		//æŠŠè¦ä¿®æ”¹çš„ç”¨æˆ·å¯¹è±¡æ”¾è¿›requeståŸŸ
 		request.setAttribute("editUser", user); 
 		return "edit1" ;
 		
 	}
 	/**
-	 * ĞŞ¸ÄÓÃ»§µÄÊµÏÖ
+	 * ä¿®æ”¹ç”¨æˆ·çš„å®ç°
 	 * @return
 	 */
 	@Action("editUser")
 	public String edit(){
-		System.out.println("ĞŞ¸ÄÍêÖ®ºó½øÀ´£º"+user);
-	//	user = userService.findUserById(user.getUserId()) ;
+		System.out.println("ä¿®æ”¹å®Œä¹‹åè¿›æ¥"+user);
 		try {
-			//ÓÃÄ£ĞÍÇı¶¯´«½øÀ´µÄĞŞ¸ÄºóµÄuserÀ´¸üĞÂÊı¾İ¿âÖĞµÄuser
+			//ç”¨æ¨¡å‹é©±åŠ¨ä¼ è¿›æ¥çš„ä¿®æ”¹åçš„useræ¥æ›´æ–°æ•°æ®åº“ä¸­çš„user
 			userService.updateUser(user) ;
 			
 		}catch(Exception e){
@@ -74,17 +76,14 @@ public class editAction extends ActionSupport implements ModelDriven<User>{
 	}
 	
 	/**
-	 * 	É¾³ıÓÃ»§µÄÊµÏÖ
+	 * åˆ é™¤
+	 * @return
 	 */
 	@Action("delete")
 	public String deleteUser() {
-		System.out.println("´«½øÀ´µÄÒªÉ¾³ıµÄÓÃ»§ID"+user.getUserId());
+		System.out.println("ä¼ è¿›æ¥çš„è¦åˆ é™¤çš„ç”¨æˆ·ID"+user.getUserId());
 		user = userService.findUserById(user.getUserId()) ;
-		//²»ÄÜÖ»Í¨¹ıuserIdÉ¾³ıÓÃ»§£¬ÒªÓĞÊµÌå¡£¿ÉÄÜÃ»ÓÃÊôĞÔÇı¶¯£¬¿ÉÒÔÓÃÊôĞÔÇı¶¯ÊÔÊÔ£¿
-		//userService.deleteById(user.getUserId()) ;
 		userService.deleteUser(user);
-		
-		
 		
 		return "success" ;
 	}

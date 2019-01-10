@@ -15,7 +15,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicInterface2;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cm.domain.MediaPreview;
@@ -44,6 +43,7 @@ import com.opensymphony.xwork2.ModelDriven;
 })
 public class checkMovieAction extends ActionSupport implements ModelDriven<MovieCheck> {
 
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private IResourceService resourceService ;
 	@Autowired

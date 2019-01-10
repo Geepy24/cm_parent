@@ -5,23 +5,25 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 /**
- * 	µÇÂ½À¹½ØÆ÷£¬Ö»ÓĞµÇÂ¼ÁËÖ®ºó²ÅÄÜ²é¿´ÄÚÈİ
+ * ç™»é™†æ‹¦æˆªå™¨ï¼Œåªæœ‰ç™»å½•äº†ä¹‹åæ‰èƒ½æŸ¥çœ‹å†…å®¹
  * @author Huangjiping
  *
  */
 public class loginInterceptor extends AbstractInterceptor {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
-		//Êı¾İÔÚsessionÓòÖĞ
+		//ç”¨æˆ·æ•°æ®åœ¨sessionåŸŸä¸­
 		Object object = ServletActionContext.getRequest().getSession().getAttribute("loginInfo") ;
 		
 		if(object == null) {
-			return "login" ;//Ã»µÇÂ¼£¬È¥µÇÂ¼
+			return "login" ;//æ²¡ç™»å½•ï¼Œå»ç™»å½•
 		}
-		System.out.println("µ±Ç°ÓÃ»§£º"+object.toString());
+		System.out.println("å½“å‰ç”¨æˆ·"+object.toString());
 		
-		return invocation.invoke() ;  //ÒÑµÇÂ¼£¬·ÅĞĞ
+		return invocation.invoke() ;  //å·²ç™»å½•ï¼Œæ”¾è¡Œ
 	}
 
 }

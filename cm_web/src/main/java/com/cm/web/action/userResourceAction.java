@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 /**
- * ÓÃ»§µÄÊ×Ò³×ÊÔ´·ÃÎÊ¶¯×÷Àà
+ * ç”¨æˆ·çš„é¦–é¡µèµ„æºè®¿é—®åŠ¨ä½œç±»
  * 
  * @author mac
  *
@@ -37,6 +37,7 @@ import com.opensymphony.xwork2.ModelDriven;
 		@Result(name = "fail", location = "/fail.jsp") })
 public class userResourceAction extends ActionSupport implements Serializable, ModelDriven<Resource> {
 
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	IResourceService resourceService;
 	Resource resource = new Resource();
@@ -47,12 +48,12 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	private int toPage;
 	
 
-	// ·ÖÒ³µÄÌõÄ¿Êı
 	private static int MAXRESULTS = 10;
 	private String tag;
 
 	HttpSession session = ServletActionContext.getRequest().getSession();
 	HttpServletRequest request = ServletActionContext.getRequest();
+	@SuppressWarnings("unused")
 	private User user = (User) session.getAttribute("loginInfo");
 
 	@Override
@@ -103,26 +104,26 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * Ê×Ò³Ìø×ªÍ¼Æ¬»òÊÓÆµÁĞ±í
+	 * é¦–é¡µè·³è½¬å›¾ç‰‡æˆ–è§†é¢‘åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	@Action(value = "indexresource", results = { @Result(name = "picture", location = "/WEB-INF/jsp/picture.jsp"),
 			@Result(name = "movie", location = "/WEB-INF/jsp/movie.jsp") })
 	public String indexResource() {
-		System.out.println("½øÈëÓÃ»§×ÊÔ´ÊÓÍ¼");
+		System.out.println("è¿›å…¥ç”¨æˆ·èµ„æºè§†å›¾");
 		tag = resource.getResTag();
 		System.out.println(tag);
 		currentPage = 1;
 		session.setAttribute("picOrmov", tag);
 		resources = resourceService.findAllResource(tag, currentPage, MAXRESULTS * 2);
 
-		// ¼ÓÉÏÒ³Âë
-		// ËùÓĞ×ÊÔ´
+		// åŠ ä¸Šé¡µç 
+		// æ‰€æœ‰èµ„æº
 		Long totalItems = resourceService.AllResourceNumber(tag);
 		Long totalResource;
 
-		// ×ÜÒ³Êı
+		// æ€»é¡µæ•°
 		if (0 == totalItems) {
 			totalResource = new Long(1);
 		} else if (0 == totalItems % 10) {
@@ -141,7 +142,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * Í¼Æ¬ºÍÊÓÆµ×ÊÔ´ÏêÇé
+	 * å›¾ç‰‡å’Œè§†é¢‘èµ„æºè¯¦æƒ…
 	 * 
 	 * @return
 	 */
@@ -153,7 +154,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 		if(request.getAttribute("resId") != null) {
 			resource.setResId((Integer)request.getAttribute("resId"));
 		}
-		System.out.println("ÒªÏÔÊ¾µÄ×ÊÔ´µÄid"+resource.getResId());
+		System.out.println("è¦æ˜¾ç¤ºçš„èµ„æºçš„id"+resource.getResId());
 		Resource resourceTemp = new Resource() ;
 		resourceTemp = resourceService.findResourceById(resource.getResId()) ;
 		resource.setAdsId(resourceTemp.getAdsId());
@@ -172,7 +173,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * ×ÊÔ´ÁĞ±íµÄÒ³ÂëÑ¡Ôñ£¬Ç°¶Ë²»Í¬Ò³ÏÔÊ¾·µ»ØµÄ²»Í¬Ò³µÄÊı¾İ
+	 *èµ„æºåˆ—è¡¨çš„é¡µç é€‰æ‹©ï¼Œå‰ç«¯ä¸åŒé¡µæ˜¾ç¤ºè¿”å›çš„ä¸åŒé¡µçš„æ•°æ®
 	 * @return
 	 */
 	@Action(value = "selectPage", results = {
@@ -194,7 +195,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * ÏÂÒ»Ò³×ÊÔ´ÁĞ±í
+	 * ä¸‹ä¸€é¡µèµ„æºåˆ—è¡¨
 	 * @return
 	 */
 	@Action(value = "nextPage", results = {
@@ -203,15 +204,11 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 			@Result(name = "fail", location = "/fail.jsp") })
 	public String nPage() {
 		tag = request.getSession().getAttribute("picOrmov").toString();
-		// ²»ÄÜ¸Ä±äcurrentPageµÄµØÖ·£¬²»È»ÊôĞÔÇı¶¯±»·Å½øÖµÕ»µÄÓÀÔ¶ÊÇ×î¿ªÊ¼µÄÄÇ¸öµØÖ·
+		// ä¸èƒ½æ”¹å˜currentPageçš„åœ°å€ï¼Œä¸ç„¶å±æ€§é©±åŠ¨è¢«æ”¾è¿›å€¼æ ˆçš„æ°¸è¿œæ˜¯æœ€å¼€å§‹çš„é‚£ä¸ªåœ°å€
 		int temp = currentPage;
 		temp = temp + 1;
 		currentPage = temp;
-//		try {
-//			
-//		}catch(Exception e){
-//			
-//		}
+
 		resources = resourceService.findAllResource(tag, currentPage, MAXRESULTS);
 		System.out.println(resources.size());
 		if (0 == resources.size()) {
@@ -228,7 +225,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * ÉÏÒ»Ò³×ÊÔ´ÁĞ±í
+	 * ä¸Šä¸€é¡µèµ„æºåˆ—è¡¨
 	 * @return
 	 */
 	@Action(value = "prePage", results = {
@@ -255,7 +252,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * ÏÂÒ»ÕÅÍ¼Æ¬»òÊÓÆµ
+	 * ä¸‹ä¸€å¼ å›¾ç‰‡æˆ–è§†é¢‘
 	 * @return
 	 */
 	@Action(value = "nextRes", results = { 
@@ -263,22 +260,22 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 			@Result(name="fail",location="/fail.jsp")
 	})
 	public String nextResource() {
-		//ÒòÎªÊÓÆµºÍÍ¼Æ¬¶¼´æÔÚÍ¬Ò»ÕÅ±í£¬ËùÒÔÍ¼Æ¬µÄÏÂÒ»¸ö¿ÉÄÜÊÇÊÓÆµ
+		//ï¿½ï¿½Îªï¿½ï¿½Æµï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ò»ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµ
 		tag = resource.getResTag() ;
-		System.out.println("ÏÂÒ»¸öÒªÕÒµÄ×ÊÔ´Àà±ğ"+tag);
-		System.out.println("µ±Ç°µÄresId£¬Òª²éÕÒÏÂÒ»¸öid" + resource.getResId());
+		System.out.println("ä¸‹ä¸€ä¸ªè¦æ‰¾çš„èµ„æºç±»åˆ«"+tag);
+		System.out.println("å½“å‰çš„resIdï¼Œè¦æŸ¥æ‰¾ä¸‹ä¸€ä¸ªid" + resource.getResId());
 		try {
 			
 			Integer nextId = resourceService.nextResourceId(resource.getResId(),tag);
 			
-			System.out.println("ÏÂÒ»¸öresource"+resourceService.findResourceById(nextId));
-			//¿ÉÒÔÍ¨¹ıresultµÄ²ÎÊı½«Êı¾İ·¢ËÍ¸øÁíÍâÒ»¸öaction
+			System.out.println("ä¸‹ä¸€ä¸ªresourcee"+resourceService.findResourceById(nextId));
+			//å¯ä»¥é€šè¿‡resultçš„å‚æ•°å°†æ•°æ®å‘é€ç»™å¦å¤–ä¸€ä¸ªaction
 			
 			request.setAttribute("resId", nextId);
 			
 			return SUCCESS;
 		}catch (Exception e) {
-			System.out.println("²»´æÔÚÏÂÒ»¸ö×ÊÔ´");
+			System.out.println("ä¸å­˜åœ¨ä¸‹ä¸€ä¸ªèµ„æº");
 			e.printStackTrace();
 			return "fail" ;
 		}
@@ -286,7 +283,7 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * ÉÏÒ»ÕÅÍ¼Æ¬»òÊÓÆµ
+	 * ä¸Šä¸€å¼ å›¾ç‰‡æˆ–è§†é¢‘
 	 * @return
 	 */
 	@Action(value = "preRes", results = { 
@@ -296,18 +293,18 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	public String preResource() {
 	
 		tag = resource.getResTag() ;
-		System.out.println("ÏÂÒ»¸öÒªÕÒµÄ×ÊÔ´Àà±ğ"+tag);
-		System.out.println("µ±Ç°µÄresId£¬Òª²éÕÒÉÏÒ»¸öid" + resource.getResId());
+		System.out.println("ä¸Šä¸€ä¸ªè¦æ‰¾çš„èµ„æºç±»åˆ«"+tag);
+		System.out.println("å½“å‰çš„resIdï¼Œè¦æŸ¥æ‰¾ä¸Šä¸€ä¸ªid" + resource.getResId());
 		try {
 			Integer preId = resourceService.preResourceId(resource.getResId(),tag);
 			System.out.println(preId);
 			
-			System.out.println("ÉÏÒ»¸ö×ÊÔ´£º"+resourceService.findResourceById(preId));		
+			System.out.println("ä¸Šä¸€ä¸ªèµ„æº"+resourceService.findResourceById(preId));		
 			
 			request.setAttribute("resId", preId);
 			return SUCCESS;
 		}catch(Exception e){
-			System.out.println("²»´æÔÚÉÏÒ»¸ö×ÊÔ´id");
+			System.out.println("ä¸å­˜åœ¨ä¸Šä¸€ä¸ªèµ„æºidid");
 			e.printStackTrace();
 			return "fail" ;
 		}
@@ -316,13 +313,6 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 		
 	}
 
-//	@Action(value = "delResource", results = { @Result(name = "success", type = "json") })
-//	public String deleteResource() {
-//
-//		System.out.println("ÒªÉ¾³ıµÄid" + resource.getResId());
-//		resourceService.deleteResource(resource.getResId());
-//
-//		return SUCCESS;
-//	}
+
 
 }

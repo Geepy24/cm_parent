@@ -12,15 +12,11 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.hibernate.Session;
-import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cm.domain.Draft;
-import com.cm.domain.Dustbin;
 import com.cm.domain.User;
 import com.cm.service.IArticleService;
-import com.mysql.jdbc.log.Log;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -31,22 +27,18 @@ import net.sf.json.JSONObject;
 @Result(name="fail",location="/fail.jsp")
 public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 	
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private IArticleService articleService ;
 	private Draft draft = new Draft() ;
 	private String returndata ;
 	
 	HttpSession session = ServletActionContext.getRequest().getSession() ;
-	//µ±Ç°ÓÃ»§
 	private User user =(User) session.getAttribute("loginInfo")  ;
 	private List<Draft> drafts ;
-	//·ÖÒ³×î´óÌõÄ¿Êı
 	private static int MAXRESULTS = 10 ;
-	//µ±Ç°Ò³Âë
 	private int currentPage ;
 	
-	
-	//²İ¸åÏäÒ³ÃæÌø×ª
 	private int toPage ;
 	
 	@Override
@@ -101,13 +93,13 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 
 	//-----------action--------------------
 	/**
-	 * 	±£´æ²İ¸åÌøµ½²İ¸åÏäµÄaction
-	 * 	½«²İ¸åµÄid·µ»Ø
+	 * 	ä¿å­˜è‰ç¨¿è·³åˆ°è‰ç¨¿ç®±çš„action
+	 * 	å°†è‰ç¨¿çš„idè¿”å›
 	 */
 	@Action(value="saveTemp",results= {@Result(name="success",type="json",params= {"root","returndata"})})
 	//location="/WEB-INF/jsp/management/article/tempList.jsp"
 	public String tempArticle() {
-		System.out.println("²İ¸åÏä");
+		System.out.println("è‰ç¨¿ç®±");
 		System.out.println(draft);
 		System.out.println(user);
 		
@@ -122,36 +114,26 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 	}
 
 /**
- * 	²İ¸åÏäÁĞ±í£¬¿ÉÒÔ´Ó²Ëµ¥½øÀ´£¨²»´øÊı¾İ£©
- * 			Ò²¿ÉÒÔ´Ó±£´æÎÄÕÂ½øÀ´£¨´øÈëÊı¾İÎªauthorIDºÍdraId£©
- * 	ĞèÒª¸Ä½ødao²ãµÄ·ÖÒ³·½·¨
+ * 	è‰ç¨¿ç®±åˆ—è¡¨ï¼Œå¯ä»¥ä»èœå•è¿›æ¥ï¼ˆä¸å¸¦æ•°æ®ï¼‰
+ * 	ä¹Ÿå¯ä»¥ä»ä¿å­˜æ–‡ç« è¿›æ¥ï¼ˆå¸¦å…¥æ•°æ®ä¸ºauthorIDå’ŒdraIdï¼‰
+ * 	éœ€è¦æ”¹è¿›daoå±‚çš„åˆ†é¡µæ–¹æ³•
  * @return
  */
 	@Action(value="toDraftList",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/tempList.jsp")})
 	public String toList() {
 		HttpServletRequest request = ServletActionContext.getRequest() ;
-		System.out.println("Ò³ÃæÀ´Ô´£º"+request.getRequestURL());
+		System.out.println("é¡µé¢æ¥æº"+request.getRequestURL());
 		
 		currentPage = 1 ;
-		
- 		//Draft draftTemp = null ;
-		//draft.setAuthorId(user.getUserId());
 		draft.setUser(user);
 		System.out.println(draft.getDraId());
-		//ÓÃÕâÖÖ°ì·¨ÈÃÖµÕ»¶¥¶ËµÄ¶ÔÏóÓĞÖµ£¬²»¸Ä±äÊµÌåÀàµÄµØÖ·
-		//draftTemp = articleService.findDraftById(draft.getDraId());
-		//System.out.println(draft.getAuthorId());
 		System.out.println(draft.getUser().getUserId());
-		//draft.setArtTitle(draftTemp.getArtTitle());
-		//draft.setArtContent(draftTemp.getArtContent());
-		//draft.setLastMod(draftTemp.getLastMod());
-		//Ê¹ÓÃhibernateTemplateµÄfindByExample·½·¨
 		drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
 		
-		//ËùÓĞ²İ¸å
+		//æ‰€æœ‰è‰ç¨¿
 		Long totalItems = articleService.AllDraftNumber(draft.getUser().getUserId()) ;
 		Long totalPages ;
-		//×ÜÒ³Êı
+		//æ€»é¡µæ•°
 		if(0 == totalItems) {
 			totalPages = new Long(1);
 		}else if(0 == totalItems%10) {
@@ -159,16 +141,15 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 		}else {
 			totalPages = (totalItems/10) + 1  ;
 		}
-		//·Å½øsession
+		//æ”¾è¿›session
 		session.setAttribute("totalPages", totalPages);
 		return SUCCESS;
 	}
 	
-	//ÏÂÒ»Ò³ÎÄÕÂÁĞ±í
+	//ä¸‹ä¸€é¡µæ–‡ç« åˆ—è¡¨
 		@Action(value="nextDraft",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/tempList.jsp")})
 		public String nPage() {
 			
-			//²»ÄÜ¸Ä±äcurrentPageµÄµØÖ·£¬²»È»ÊôĞÔÇı¶¯±»·Å½øÖµÕ»µÄÓÀÔ¶ÊÇ×î¿ªÊ¼µÄÄÇ¸öµØÖ·
 			int temp = currentPage ;
 			temp = temp + 1 ;
 			currentPage = temp ;
@@ -182,7 +163,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			
 			return SUCCESS ;
 		}
-		//ÉÏÒ»Ò³ÎÄÕÂÁĞ±í
+		//ä¸Šä¸€é¡µè‰ç¨¿åˆ—è¡¨
 		@Action(value="preDraft",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/tempList.jsp")})
 		public String pPage() {
 			
@@ -199,7 +180,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			
 			return SUCCESS ;
 		}
-		//ÎÄÕÂÁĞ±íµÄÒ³ÂëÑ¡Ôñ£¬Ç°¶Ë²»Í¬Ò³ÏÔÊ¾·µ»ØµÄ²»Í¬Ò³µÄÊı¾İ
+		//æ–‡ç« åˆ—è¡¨çš„é¡µç é€‰æ‹©ï¼Œå‰ç«¯ä¸åŒé¡µæ˜¾ç¤ºè¿”å›çš„ä¸åŒé¡µçš„æ•°æ®
 		@Action(value="selectDraftPage",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/draftList.jsp")})
 		public String selectPage() {
 			
@@ -212,9 +193,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			
 			return SUCCESS ;
 		}
-		/**
-		 * 	É¾³ı²İ¸å
-		 */
+		//åˆ é™¤è‰ç¨¿
 		@Action(value="deleDraft",results= {@Result(name="success",type="chain",location="toDraftList")})
 		public String deleteDraft() {
 			System.out.println(draft.getDraId());
@@ -222,9 +201,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			
 			return SUCCESS ;
 		}
-		/**
-		 * Ìø×ªµ½±à¼­Ò³Ãæ
-		 */
+		//è·³è½¬åˆ°ç¼–è¾‘é¡µé¢
 		@Action(value="toDraEdit",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/editArticle.jsp")})
 		public String toDraftEdit() {
 			
@@ -235,10 +212,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			
 			return SUCCESS ;
 		}
-		/**
-		 * 	±à¼­²İ¸å
-		 * @return
-		 */
+		//ç¼–è¾‘è‰ç¨¿
 		@Action(value="draEdit",results= {@Result(name="success",type="json",
 				params= {"root","returndata"})})
 		public String draEdit() {

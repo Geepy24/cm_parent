@@ -1,5 +1,7 @@
 package com.cm.web.action;
-
+/**
+ * 可与其他动作类合并
+ */
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -14,7 +16,8 @@ import com.opensymphony.xwork2.ActionSupport;
 	@Result(name="success",location="/index.jsp")
 })
 public class logoutAction extends ActionSupport {
-	
+	private static final long serialVersionUID = 1L;
+
 	@Action("logout")
 	public String Logout() {
 			

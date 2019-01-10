@@ -15,13 +15,13 @@ import com.cm.domain.Resource;
 import net.sf.json.JSONObject;
 
 /**
- * ´¦ÀíJSONÊı¾İ
+ * å¤„ç†JSONæ•°æ®
  * @author mac
  *
  */
 public class jsonUtils{
 	/**
-	 * ½«articles±äÎªJSON×Ö·û´®·µ»Ø
+	 * å°†articleså˜ä¸ºJSONå­—ç¬¦ä¸²è¿”å›
 	 * @param list
 	 * @return
 	 */
@@ -36,8 +36,8 @@ public class jsonUtils{
 			String pubTime = article.getPubTime() ;
 			String lastMod = article.getLastMod() ;
 			String artId = String.valueOf(article.getArtId()) ;
-		//	System.out.println(i+"-"+artTitle);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+//			System.out.println(i+"-"+artTitle);
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = artTitle+"###"+pubTime+"###"+lastMod+"###"+artId ;
 			map.put(String.valueOf(i), content) ;
 			
@@ -48,7 +48,7 @@ public class jsonUtils{
 		return jsonObject.toString() ;
 	}
 	/**
-	 * ½«drafts±äÎªJSON×Ö·û´®
+	 * å°†draftså˜ä¸ºJSONå­—ç¬¦ä¸²
 	 * @param list
 	 * @return
 	 */
@@ -63,7 +63,7 @@ public class jsonUtils{
 			String lastMod = draft.getLastMod() ;
 			String draId = String.valueOf(draft.getDraId()) ;
 			System.out.println(i+"-"+artTitle);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = artTitle+"###"+lastMod+"###"+ draId;
 			map.put(String.valueOf(i), content) ;
 			
@@ -74,7 +74,7 @@ public class jsonUtils{
 			return jsonObject.toString() ;
 		}
 	/**
-	 * ½«dustbins±äÎªJSON×Ö·û´®
+	 * å°†dustbinså˜ä¸ºJSONå­—ç¬¦ä¸²
 	 * @param list
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public class jsonUtils{
 			String delTime = dustbin.getDelTime() ;
 			String dustId = String.valueOf(dustbin.getDustId()) ;
 			System.out.println(i+"-"+artTitle);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = artTitle+"###"+delTime+"###"+ dustId;
 			map.put(String.valueOf(i), content) ;
 			
@@ -101,13 +101,12 @@ public class jsonUtils{
 		}
 		
 	/**
-	 * ½«resourceµÄmovie±äÎªJSON×Ö·û´®
+	 * å°†resourceçš„movieå˜ä¸ºJSONå­—ç¬¦ä¸²
 	 *	mpName/resCom/pubTime/resId
 	 * @param list
 	 * @return
 	 */
 	public static String movieListToJsonString(List<Resource> list) {
-		//ĞèÒªËõÂÔÍ¼Ãû³Æ£¬·¢²¼Ê±¼ä£¬resId
 		Map<String ,String> map = new HashMap<String, String>() ;
 		Iterator<Resource> iterator = list.iterator() ;
 		int i = 1 ;
@@ -118,7 +117,7 @@ public class jsonUtils{
 			String pubTime = resource.getPubTime() ;
 			String resId = String.valueOf(resource.getResId()) ;
 			System.out.println(i+"-"+mpName);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = mpName+"###"+resCom+"###"+ pubTime+"###"+resId;
 			map.put(String.valueOf(i), content) ;
 			
@@ -130,7 +129,7 @@ public class jsonUtils{
 		}
 	
 	/**
-	 * ½«resourceµÄpicture±äÎªJSON×Ö·û´®
+	 * å°†resourceçš„pictureå˜ä¸ºJSONå­—ç¬¦ä¸²
 	 * picName/resCom/pubTime/resId 
 	 * @param list
 	 * @return
@@ -147,7 +146,7 @@ public class jsonUtils{
 			String pubTime = resource.getPubTime() ;
 			String resId = String.valueOf(resource.getResId()) ;
 			System.out.println(i+"-"+picName);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = picName+"###"+resCom+"###"+ pubTime+"###"+resId;
 			map.put(String.valueOf(i), content) ;
 			
@@ -160,7 +159,7 @@ public class jsonUtils{
 	
 
 	/**
-	 * ½«pcÁĞ±íµÄpicture±äÎªJSON×Ö·û´®
+	 *	å°†pcåˆ—è¡¨çš„pictureå˜ä¸ºJSONå­—ç¬¦ä¸²	
 	 * picName/checkTag/checkCom/resId ;
 	 * @param list
 	 * @return
@@ -177,7 +176,7 @@ public class jsonUtils{
 			String checkCom = pictureCheck.getCheckCom() ;
 			String picId = String.valueOf(pictureCheck.getPicId() ) ;
 			System.out.println(i+"-"+picName);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = picName+"###"+checkTag+"###"+ checkCom+"###"+picId;
 			map.put(String.valueOf(i), content) ;
 			
@@ -188,13 +187,12 @@ public class jsonUtils{
 			return jsonObject.toString() ;
 		}
 	/**
-	 * ½«mcÁĞ±íµÄmovie±äÎªJSON×Ö·û´®
+	 * å°†mcåˆ—è¡¨çš„movieå˜ä¸ºJSONå­—ç¬¦ä¸²
 	 * mpName/checkTag/checkCom/resId;
 	 * @param list
 	 * @return
 	 */
 	public static String mcListToJsonString(List<MovieCheck> list) {
-		//ĞèÒªËõÂÔÍ¼Ãû³Æ£¬·¢²¼Ê±¼ä£¬resId
 		Map<String ,String> map = new HashMap<String, String>() ;
 		Iterator<MovieCheck> iterator = list.iterator() ;
 		int i = 1 ;
@@ -205,7 +203,7 @@ public class jsonUtils{
 			String checkCom = movieCheck.getCheckCom() ;
 			String movId = String.valueOf(movieCheck.getMovId()) ;
 			System.out.println(i+"-"+mpName);
-			//ºÏ²¢ÔÚÒ»¸öStringÖĞ£¬Í¨¹ı###·Ö¸î
+			//åˆå¹¶åœ¨ä¸€ä¸ªStringä¸­ï¼Œé€šè¿‡###åˆ†å‰²
 			String content = mpName+"###"+checkTag+"###"+ checkCom+"###"+movId;
 			map.put(String.valueOf(i), content) ;
 			

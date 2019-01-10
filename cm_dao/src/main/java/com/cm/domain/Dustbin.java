@@ -2,20 +2,23 @@ package com.cm.domain;
 
 import java.io.Serializable;
 /**
- * 	文章回收站的实体类
+ * 	鍥炴敹绔欐枃绔犺〃
  * @author Huangjiping
  *
  */
 public class Dustbin implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer dustId ;
 	private Integer artId ;
-//	private String authorName ;
 	private String artTitle ;
 	private String artContent ;
 	private String delTime ;
 	
-	//一对多
+	//澶栭敭瀛楁
 	private User user ;
 	
 	
@@ -38,12 +41,7 @@ public class Dustbin implements Serializable {
 	public void setArtId(Integer artId) {
 		this.artId = artId;
 	}
-//	public String getAuthorName() {
-//		return authorName;
-//	}
-//	public void setAuthorName(String authorName) {
-//		this.authorName = authorName;
-//	}
+
 	public String getArtTitle() {
 		return artTitle;
 	}

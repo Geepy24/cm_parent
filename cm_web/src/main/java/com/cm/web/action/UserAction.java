@@ -9,7 +9,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.springframework.stereotype.Controller;
 
 import com.cm.domain.User;
 import com.cm.service.IUserService;
@@ -28,14 +27,14 @@ import com.opensymphony.xwork2.ModelDriven;
 })
 public class UserAction extends ActionSupport implements ModelDriven<User>{
 	
+	
+	private static final long serialVersionUID = 1L;
 	@Resource(name="userService")
 	private IUserService userService ; 
-	//--------Ä£ĞÍÇı¶¯--------
 	private User user =  new User();  
 	private List<User> users ; 
 	
-	//--------ÓĞÊµÌåÀàµÄÊôĞÔÇı¶¯--------
-	private String userName ;  //ÊôĞÔÇı¶¯
+	private String userName ;  
 	private int userId;
 	
 	
@@ -83,14 +82,14 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		return user;
 	}
 
-//------------------¶¯×÷·½·¨-------------------------
+//----------------åŠ¨ä½œæ–¹æ³•------------------------
 	
 	@Action("hello")
 	public String hello() {
 		return "hello" ;
 	}
 	/**
-	 * ²éÕÒËùÓĞÓÃ»§
+	 * æŸ¥æ‰¾æ‰€æœ‰ç”¨æˆ·
 	 * @return
 	 */
 	@Action("findAll")
@@ -101,27 +100,26 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		return "findAllUser" ;
 	}
 	/**
-	 * 	¸ù¾İÃû×Ö²éÕÒÓÃ»§
+	 * æ ¹æ®åå­—æŸ¥æ‰¾ç”¨æˆ·
 	 * @return
 	 */
 	@Action("findByName")
-	public String findByName() {  //ActionÖĞµÄ·½·¨²»ÄÜÓĞ²ÎÊı
+	public String findByName() { 
 		
 		user = userService.findUserByName(user.getUserName()) ;
 		System.out.println(user);
 //		if(user == null) {
 //			return "fail" ;
 //		}
-		return "findOne" ;  //²éÑ¯²»µ½£¬·µ»Ø´íÎóÒ³Ãæ
+		return "findOne" ; 
 	}
 	/**
-	 * ¸ù¾İid²éÕÒÓÃ»§
-	 * 
+	 * æ ¹æ®idæŸ¥æ‰¾ç”¨æˆ·
 	 */
 	@Action("findById")
-	public String findById() {  //ActionÖĞµÄ·½·¨²»ÄÜÓĞ²ÎÊı
+	public String findById() {  
 		
-		System.out.println("Ç°¶Ë´«µİ:"+user.getUserId());
+		System.out.println("å‰æ®µä¼ é€’:"+user.getUserId());
 		user = userService.findUserById(user.getUserId());
 		System.out.println(user);
 		
@@ -129,7 +127,7 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 	}
 	
 	/**
-	 * ±£´æÓÃ»§
+	 * ä¿å­˜ç”¨æˆ·
 	 */
 	@Action("save")
 	public String save() {
@@ -138,11 +136,11 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		return SUCCESS ;
 	}
 	/**
-	 * 	É¾³ıÓÃ»§
+	 * åˆ é™¤ç”¨æˆ·
 	 */
 	@Action("delete")
 	public String delete() {
-		//¸ù¾İid»òÕßÓÃ»§Ãû²éÕÒµ½ÓÃ»§Ö®ºóÔÙ½«ÆäÉ¾³ı
+		//æ ¹æ®idæˆ–è€…ç”¨æˆ·åæŸ¥æ‰¾åˆ°ç”¨æˆ·ä¹‹åå†å°†å…¶åˆ é™¤
 		System.out.println(userId);
 		if(0 != userId) {
 			user = userService.findUserById(userId) ;

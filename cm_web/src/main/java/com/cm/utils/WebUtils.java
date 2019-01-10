@@ -13,7 +13,6 @@ import java.util.Date;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.apache.struts2.ServletActionContext;
 import org.junit.Test;
 
@@ -23,7 +22,7 @@ public class WebUtils {
 	 
 	
 	/**
-	 * 	µÃµ½webÓ¦ÓÃµÄ¸ùÄ¿Â¼
+	 * 		å¾—åˆ°webåº”ç”¨çš„æ ¹ç›®å½•
 	 * @return
 	 */
 	public static String getAppPath() {
@@ -33,7 +32,7 @@ public class WebUtils {
 	}
 
 	/**
-	 * 	¸ù¾İÊ±¼äÉú³ÉËæ»úÊı
+	 * 	æ ¹æ®æ—¶é—´ç”Ÿæˆéšæœºæ•°
 	 */
 	
 	public static String random() {
@@ -48,18 +47,19 @@ public class WebUtils {
 	}
 
 	/**
-	 * 	¸Ã¶¯×÷·½·¨ÓÃÓÚÇ°¶ËÎÄ±¾±à¼­Æ÷´«ÈëµÄÎÄ±¾´¦Àí³ÉĞÂµÄhtml
-	 * 	°üÀ¨¶ÁÈ¡Ä£°åhtml£¬Ìæ»»Ä£°åhtmlÖĞÏàÓ¦ÄÚÈİ£¬Éú³ÉĞÂµÄhtmlÎÄ¼ş´æÈë´ÅÅÌ
-	 * 	·µ»ØÖµ£ºĞÂÉú³ÉµÄhtmlµÄuriµØÖ·
-	 * 	²ÎÊı£ºÎÄÕÂ±êÌâ£¬×÷Õß£¬ÄÚÈİ£¬·¢²¼Ê±¼ä
+	 * 	è¯¥åŠ¨ä½œæ–¹æ³•ç”¨äºå‰ç«¯æ–‡æœ¬ç¼–è¾‘å™¨ä¼ å…¥çš„æ–‡æœ¬å¤„ç†æˆæ–°çš„html
+	 * 	åŒ…æ‹¬è¯»å–æ¨¡æ¿htmlï¼Œæ›¿æ¢æ¨¡æ¿htmlä¸­ç›¸åº”å†…å®¹ï¼Œç”Ÿæˆæ–°çš„htmlæ–‡ä»¶å­˜å…¥ç£ç›˜
+	 * 	è¿”å›å€¼ï¼šæ–°ç”Ÿæˆçš„htmlçš„uriåœ°å€
+	 * 	å‚æ•°ï¼šæ–‡ç« æ ‡é¢˜ï¼Œä½œè€…ï¼Œå†…å®¹ï¼Œå‘å¸ƒæ—¶é—´
 	 */
+	@Deprecated
 	public static String createArticle(String title,String author,String content,String pubTime) {
-		//ÎÄÕÂÄ£°åhtmlµÄÂ·¾¶
+		//æ–‡ç« æ¨¡æ¿htmlçš„è·¯å¾„
 				String articleTemplatePath = WebUtils.getAppPath() +"articleTemplate.html" ;
 				//System.out.println(articleTemplatePath);
 				
-				//¶ÁÈ¡Ä£°å£¬½«Ä£°åÖĞµÄÏàÓ¦ÄÚÈİÌæ»»³ÉÎÄÕÂµÄÏàÓ¦ÄÚÈİ£¬ÔÙ½«ÎÄ¼şĞ´³ö
-				//Ê¹ÓÃbufferedReader
+				//è¯»å–æ¨¡æ¿ï¼Œå°†æ¨¡æ¿ä¸­çš„ç›¸åº”å†…å®¹æ›¿æ¢æˆæ–‡ç« çš„ç›¸åº”å†…å®¹ï¼Œå†å°†æ–‡ä»¶å†™å‡º
+				//ä½¿ç”¨bufferedReader
 				String str = "" ;
 				try {
 					String tempStr = "" ;
@@ -68,27 +68,27 @@ public class WebUtils {
 					while ((tempStr = br.readLine()) != null) {
 						str = str + tempStr ;
 					}
-					System.out.println("¶ÁÈ¡µÄÄ£°å"+str);
+					System.out.println("è¯»å–çš„æ¨¡æ¿"+str);
 					is.close(); 
 					
 				} catch (IOException e) {
 					e.printStackTrace(); 
 					
 				}
-				//Éú³ÉµÄĞÂµÄhtmlµÄµØÖ·£¬Ãû³ÆÎª±êÌâ+ÈıÎ»Ëæ»úÊı
-				//´æ·ÅµÄuriÊÇÔÚÓë¸ÃwebÏîÄ¿Í¬¼¶µÄCMVolleyball-articleÎÄ¼ş¼ĞÖĞ
-				//Èç¹û´æ·ÅÔÚÏîÄ¿ÄÚ£¬ÖØĞÂ²¿Êğ·şÎñÆ÷»áÇå¿Õ
+				//ç”Ÿæˆçš„æ–°çš„htmlçš„åœ°å€ï¼Œåç§°ä¸ºæ ‡é¢˜+ä¸‰ä½éšæœºæ•°
+				//å­˜æ”¾çš„uriæ˜¯åœ¨ä¸è¯¥webé¡¹ç›®åŒçº§çš„CMVolleyball-articleæ–‡ä»¶å¤¹ä¸­
+				//å¦‚æœå­˜æ”¾åœ¨é¡¹ç›®å†…ï¼Œé‡æ–°éƒ¨ç½²æœåŠ¡å™¨ä¼šæ¸…ç©º
 			//	pathwebapp = pathwebapp.substring(0,pathwebapp.lastIndexOf("\\"));
 				String webPath = WebUtils.getAppPath() ;
 				
 				String newArticlePath =  webPath.substring(0,webPath.lastIndexOf("\\"))
 						+ "-article\\" 
 						+ title +"-"+WebUtils.random()+".html" ;
-				System.out.println("ĞÂÎÄÕÂµÄuriµØÖ·£º"+newArticlePath);
+				System.out.println("æ–°æ–‡ç« çš„uriåœ°å€"+newArticlePath);
 				try {
 					
-					//ÓÃÌá½»À´µÄÎÄÕÂµÄÄÚÈİÌæ»»Ä£°åÖĞÏàÓ¦µÄÄÚÈİ
-					//ÒòÎªÎÄÕÂÖĞ¿ÉÄÜ»áÓĞÌØÊâ×Ö·ûÊ¹µÃreplaceAll³öÏÖ´íÎó£¬ËùÒÔÒªÏÈ´¦ÀíÌØÊâ×Ö·û
+					//ç”¨æäº¤æ¥çš„æ–‡ç« çš„å†…å®¹æ›¿æ¢æ¨¡æ¿ä¸­ç›¸åº”çš„å†…å®¹
+					//å› ä¸ºæ–‡ç« ä¸­å¯èƒ½ä¼šæœ‰ç‰¹æ®Šå­—ç¬¦ä½¿å¾—replaceAllå‡ºç°é”™è¯¯ï¼Œæ‰€ä»¥è¦å…ˆå¤„ç†ç‰¹æ®Šå­—ç¬¦
 					title = java.util.regex.Matcher.quoteReplacement(title) ;
 					author = java.util.regex.Matcher.quoteReplacement(author) ;
 					content = java.util.regex.Matcher.quoteReplacement(content) ;
@@ -97,11 +97,11 @@ public class WebUtils {
 					str = str.replaceAll("###author###",author) ;
 					str = str.replaceAll("###content###", content) ;
 					
-					System.out.println("Ìæ»»ºóµÄÄÚÈİ"+str);
-					//Ğ´³öµ½ĞÂµÄhtmlÖĞ
+					System.out.println("ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+str);
+					//å†™å‡ºåˆ°æ–°çš„htmlä¸­
 					
 					File newArticle = new File(newArticlePath) ;
-					//outputStreamWriter¿ÉÒÔÖ¸¶¨Ğ´³öµÄ±àÂë
+					//outputStreamWriterå¯ä»¥æŒ‡å®šå†™å‡ºçš„ç¼–ç 
 					OutputStreamWriter ow = new OutputStreamWriter(new FileOutputStream(newArticle),"UTF-8") ;
 					
 					BufferedWriter bw = new BufferedWriter(ow) ;
@@ -123,7 +123,7 @@ public class WebUtils {
 				
 	}
 	/**
-	 * µÃµ½ yyyy-mm-ddµÄµ±Ç°Ê±¼ä
+	 * å¾—åˆ° yyyy-mm-ddçš„å½“å‰æ—¶é—´
 	 * @return
 	 */
 	public static String getTime() {

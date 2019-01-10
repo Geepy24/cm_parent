@@ -9,9 +9,6 @@ import com.cm.dao.IArticleDao;
 import com.cm.domain.Article;
 import com.cm.domain.Draft;
 import com.cm.domain.Dustbin;
-import com.cm.domain.MovieCheck;
-import com.cm.domain.PictureCheck;
-import com.cm.domain.User;
 import com.cm.service.IArticleService;
 
 @Service("articleService")
@@ -70,15 +67,12 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDao.find(content);
 	}
 	
-	/**
-	 * ��ҳ����ָ���û����������£�ÿҳ10��
-	 */
 	public List<Article> findByUser(Article article,Integer currentPage,Integer maxResults){
 		
 		return articleDao.findByUser(article, currentPage, maxResults) ;
 		
 	} 
-//-------------------�ݸ������----------------------------
+//-------------------草稿箱----------------------------
 	@Override
 	public void saveDraft(Draft draft) {
 
@@ -115,9 +109,14 @@ public class ArticleServiceImpl implements IArticleService {
 		articleDao.deleteDraft(draId);
 		
 	}
+	@Override
+	public void updateDraft(Draft draft) {
+		articleDao. updateDraft(draft);
+		
+	}
 
 	
-	//----------------����վ����--------------------
+	//----------------回收站--------------------
 	@Override
 	public void saveDustbin(Dustbin dustbin) {
 		articleDao.saveDustbin(dustbin) ;
@@ -159,11 +158,7 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDao.AllDustbinNumber(userId) ;
 	}
 
-	@Override
-	public void updateDraft(Draft draft) {
-		articleDao. updateDraft(draft);
-		
-	}
+
 
 	
 

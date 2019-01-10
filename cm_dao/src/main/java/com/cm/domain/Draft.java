@@ -1,16 +1,21 @@
 package com.cm.domain;
 
 import java.io.Serializable;
-
+/**
+ * 文章草稿表
+ * @author mac
+ *
+ */
 public class Draft implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1L;
 	private int draId ;
 	private String artTitle ;
 	private String artContent ;
-//	private int authorId ;
 	private String lastMod ;
 	
-	//һ�Զ�
+	//外键字段
 	private User user ;
 	
 	public User getUser() {
@@ -44,12 +49,7 @@ public class Draft implements Serializable {
 	public void setLastMod(String lastMod) {
 		this.lastMod = lastMod;
 	}
-//	public int getAuthorId() {
-//		return authorId;
-//	}
-//	public void setAuthorId(int authorId) {
-//		this.authorId = authorId;
-//	}
+
 	@Override
 	public String toString() {
 		return "Draft [draId=" + draId + ", artTitle=" + artTitle + ", artContent=" + artContent + ", authorId="

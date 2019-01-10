@@ -8,45 +8,52 @@ import com.cm.domain.User;
 public interface IUserService {
 
 	/**
-	 * Í¨¹ıid²éÕÒÒ»¸öÓÃ»§
+	 * é€šè¿‡idæŸ¥æ‰¾
+	 * @param userId
 	 * @return
 	 */
 	User findUserById(int userId) ;
 	/**
-	 *	Í¨¹ıÃû×Ö²éÕÒÓÃ»§
+	 * é€šè¿‡ç”¨æˆ·åæŸ¥æ‰¾
+	 * @param userName
+	 * @return
 	 */
 	User findUserByName(String userName) ;
 	/**
-	 * 	¸ù¾İÓÃ»§ÃûÅĞ¶ÏÓÃ»§ÊÇ·ñ´æÔÚ
+	 * é€šè¿‡ç”¨æˆ·ååˆ¤æ–­ç”¨æˆ·æ˜¯å¦å­˜åœ¨
+	 * @param userName
+	 * @return
 	 */
 	boolean isUserExist(String userName) ;
 	/**
-	 * 	¸ù¾İÓÃ»§id¼ì²éÒ»¸öÓÃ»§ÊÇ·ñÊÇ¹ÜÀíÔ±
+	 * æ£€æŸ¥ç”¨æˆ·æ˜¯å¦ç®¡ç†å‘˜
+	 * @param userId
+	 * @return
 	 */
 	boolean isAds(int userId) ;
 	/**
-	 * 	²éÕÒËùÓĞÓÃ»§
+	 * æŸ¥æ‰¾æ‰€æœ‰
 	 * @return
 	 */
 	List<User> findAllUsers() ;
 	
 	/**
-	 * 	±£´æÓÃ»§
+	 * 	ä¿å­˜ç”¨æˆ·
 	 */
 	void saveUser(User user) ;
 	
 	/**
-	 * É¾³ıÓÃ»§
+	 * åˆ é™¤ç”¨æˆ·
 	 */
 	void deleteUser(User user) ;
 	/**
-	 * 	¸üĞÂÓÃ»§
+	 * 	æ›´æ–°ç”¨æˆ·
 	 * @param user
 	 */
 	void updateUser(User user);
 	
 	/**
-	 * Í¨¹ıidÉ¾³ı
+	 * Í¨é€šè¿‡idåˆ é™¤
 	 * @param i 
 	 */
 	void deleteById(int userId);

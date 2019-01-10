@@ -1,9 +1,14 @@
 package com.cm.domain;
 
 import java.io.Serializable;
-
+/**
+ * 待审核图片
+ * @author mac
+ *
+ */
 public class PictureCheck implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Integer picId ;
 	private String picUri ;
 	private String picName ;

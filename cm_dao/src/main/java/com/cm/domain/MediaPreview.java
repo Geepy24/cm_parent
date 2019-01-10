@@ -2,9 +2,14 @@ package com.cm.domain;
 
 import java.io.Serializable;
 
-
+/**
+ * 缩略图表
+ * @author mac
+ *
+ */
 public class MediaPreview implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Integer mpId ;
 	private String mpUri ;
 	private String mpName ;

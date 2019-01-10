@@ -1,9 +1,14 @@
 package com.cm.domain;
 
 import java.io.Serializable;
-
+/**
+ * 视频表
+ * @author mac
+ *
+ */
 public class Movie implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Integer movId ;
 	private String movUri ;
 	private String movName ;

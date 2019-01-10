@@ -12,8 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 /**
- * 	此动作类负责跳转
- * 	
+ *	璐熻矗璺宠浆 锛屼笉瀹屽杽
  * @author Huangjiping
  *
  */
@@ -28,14 +27,14 @@ import com.opensymphony.xwork2.ActionSupport;
 public class JumpAction extends ActionSupport  {
 	
 	 
-	
+	private static final long serialVersionUID = 1L;
 	@Action("login")
 	public String login() {
-		//从不同地方进入的用户，登陆完要去到不同地方，需要检测用户来源页面的url，存放标记到session
+		//浠庝笉鍚屽湴鏂硅繘鍏ョ殑鐢ㄦ埛锛岀櫥闄嗗畬瑕佸幓鍒颁笉鍚屽湴鏂癸紝闇�瑕佹娴嬬敤鎴锋潵婧愰〉闈㈢殑url锛屽瓨鏀炬爣璁板埌session
 		HttpServletRequest request = ServletActionContext.getRequest() ; 
 		System.out.println(request.getRequestURL());
 		
-		//把来源URI放在session中，等登陆成功后就可以取出来跳转到相应的action
+		//鎶婃潵婧怳RI鏀惧湪session涓紝绛夌櫥闄嗘垚鍔熷悗灏卞彲浠ュ彇鍑烘潵璺宠浆鍒扮浉搴旂殑action
 		request.getSession().setAttribute("login-ref", request.getRequestURL());
 		
 		

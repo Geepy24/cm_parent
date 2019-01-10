@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import net.sf.json.JSONObject;
 /**
- * ÎÄÕÂµÄ¶¯×÷Àà
+ * æ–‡ç« çš„åŠ¨ä½œç±»
  * @author Huangjiping
  *
  */
@@ -32,23 +32,20 @@ import net.sf.json.JSONObject;
 @Result(name="fail",location="/fail.jsp")
 public class articleAction extends ActionSupport implements ModelDriven<Article> {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Autowired
 	IArticleService articleService ;
 	
-	//Ä£ĞÍÇı¶¯
 	private Article article = new Article() ;
 
-	//ÊôĞÔÇı¶¯
 	private List<Article> articles ;
 	private int currentPage ;
 	private int toPage ;
 	private String delTime ;
-	//·ÖÒ³µÄÌõÄ¿Êı
 	private static int MAXRESULTS = 10;
 	private String returndata ;
 	private JSONObject json ;
-	//private int article_Id ;
-	//ÆäËû
 	private User user ;
 	HttpSession session = ServletActionContext.getRequest().getSession() ;
 	
@@ -98,13 +95,6 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		this.articles = articles;
 	}
 
-//	public int getArticle_Id() {
-//		return article_Id;
-//	}
-//
-//	public void setArticle_Id(int article_Id) {
-//		this.article_Id = article_Id;
-//	}
 	public Article getArticle() {
 		return this.article;
 	}
@@ -121,18 +111,16 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		this.article = article;
 	}
 
-//-------------------¶¯×÷·½·¨-------------------------------
+//-------------------åŠ¨ä½œæ–¹æ³•-------------------------------
 
 
 
-	//¸Ã¶¯×÷Àà´¦Àí¹ÜÀíÔ±µÄÎÄÕÂÌá½»
+	//è¯¥åŠ¨ä½œç±»å¤„ç†ç®¡ç†å‘˜çš„æ–‡ç« æäº¤
 	@Action(value="articleHndler",results= {@Result(name="handle",type="json")},
 				params= {"root","article"})
 	public String articleHandler() {
-		//µ±Ç°ÓÃ»§£¬¼´¹ÜÀíÔ±
+		//å½“å‰ç”¨æˆ·ï¼Œå³ç®¡ç†å‘˜
 		user = (User) session.getAttribute("loginInfo") ;
-		System.out.println("µ±Ç°Ò³ÃæÓÃ»§"+user);
-		System.out.println("Ä£ĞÍÇı¶¯½øÀ´£º"+article);
 		
 		article.setUser(user);
 		article.setAdsName(user.getUserName());
@@ -146,33 +134,28 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 	}
 	
 	
-	//ÔÚÎÄÕÂÕ¹Ê¾Ä£°åÖĞÏÔÊ¾ÎÄÕÂ£¬ĞèÒªµÄ²ÎÊıÎªÎÄÕÂID
+	//åœ¨æ–‡ç« å±•ç¤ºæ¨¡æ¿ä¸­æ˜¾ç¤ºæ–‡ç« ï¼Œéœ€è¦çš„å‚æ•°ä¸ºæ–‡ç« ID
 	@Action(value="showArticle",results={@Result(name="success",location="/WEB-INF/jsp/management/article/show.jsp")})
 	public String showPage() {
 		
-		//Ä£ĞÍÇı¶¯½øÀ´£¬Ö»ÓĞartId£¬¸ù¾İid²éÕÒarticle
-		//System.out.println(article);
 		 
 		article = articleService.findById(article.getArtId()) ;
-		System.out.println("²éÑ¯½á¹û£º"+article);
-		//²éÑ¯½á¹ûÓĞÖµ£¬µ«ÊÇÖµÕ»ÖĞµÄarticle¶ÔÏóÀïÃ»Öµ
+		System.out.println("æŸ¥è¯¢ç»“æœ"+article);
 		
 		return SUCCESS ;
 	}
 
-	//ÎÄÕÂÁĞ±í£¬·ÖÒ³²éÕÒºóÏÔÊ¾£¬ÏÔÊ¾µÄÊÇÊ×Ò³
+	//æ–‡ç« åˆ—è¡¨ï¼Œåˆ†é¡µæŸ¥æ‰¾åæ˜¾ç¤ºï¼Œæ˜¾ç¤ºçš„æ˜¯é¦–é¡µ
 	@Action(value="articleList",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/list.jsp")})
 	public String showArticleList() {
-		//µÚÒ»Ò³£¬Ã¿Ò³Ê®Ìõ
 		 
 		 currentPage = 1 ;
 		 articles = articleService.findAllArticle(currentPage,MAXRESULTS);
-		 //¼ÓÉÏÒ³Âë
-		//ËùÓĞÎÄÕÂ
+		//åŠ ä¸Šé¡µç 
+			//æ‰€æœ‰æ–‡ç« 
 			Long totalItems = articleService.AllArticleNumber();
 			Long totalArticles ;
 			
-			//×ÜÒ³Êı
 			if(0 == totalItems) {
 				totalArticles = new Long(1);
 			}else if(0 == totalItems%10) {
@@ -180,7 +163,7 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 			}else {
 				totalArticles = (totalItems/10) + 1  ;
 			}
-			//·Å½øsession
+			//æ”¾è¿›session
 			session.setAttribute("totalArticles",totalArticles );
 		 
 		 
@@ -188,7 +171,7 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		return SUCCESS;
 		
 	}
-	//ÎÄÕÂÁĞ±íµÄÒ³ÂëÑ¡Ôñ£¬Ç°¶Ë²»Í¬Ò³ÏÔÊ¾·µ»ØµÄ²»Í¬Ò³µÄÊı¾İ
+	//æ–‡ç« åˆ—è¡¨çš„é¡µç é€‰æ‹©ï¼Œå‰ç«¯ä¸åŒé¡µæ˜¾ç¤ºè¿”å›çš„ä¸åŒé¡µçš„æ•°æ®
 	@Action(value="selectPage",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/list.jsp")})
 	public String selectPage() {
 		
@@ -199,11 +182,10 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		
 		return SUCCESS ;
 	}
-	//ÏÂÒ»Ò³ÎÄÕÂÁĞ±í
+	//ä¸‹ä¸€é¡µæ–‡ç« åˆ—è¡¨
 	@Action(value="nextPage",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/list.jsp")})
 	public String nPage() {
 		
-		//²»ÄÜ¸Ä±äcurrentPageµÄµØÖ·£¬²»È»ÊôĞÔÇı¶¯±»·Å½øÖµÕ»µÄÓÀÔ¶ÊÇ×î¿ªÊ¼µÄÄÇ¸öµØÖ·
 		int temp = currentPage ;
 		temp = temp + 1 ;
 		currentPage = temp ;
@@ -215,7 +197,7 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		
 		return SUCCESS ;
 	}
-	//ÉÏÒ»Ò³ÎÄÕÂÁĞ±í
+	//ä¸Šä¸€é¡µæ–‡ç« åˆ—è¡¨
 	@Action(value="prePage",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/list.jsp")})
 	public String pPage() {
 		
@@ -231,23 +213,17 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		return SUCCESS ;
 	}
 
-	/**
-	 * 	Ò³Ãæ¼ÓÔØÊ±ÍùĞÂÎÅ¡¢×ÊÔ´À¸Ä¿ÀïÌî³äÊı¾İ
-	 */
+	//é¡µé¢åŠ è½½æ—¶å¾€æ–°é—»ã€èµ„æºæ ç›®é‡Œå¡«å……æ•°æ®
 	@Action(value="indexArticle",results= {@Result(name="success",type="json",
 					params= {"root","returndata"})})
 	public String index() {
-		System.out.println("Ê×Ò³ÇëÇó");
-		//µ÷ÊÔºó·¢ÏÖÊÇquery.list()¿¨×¡£¬Ã»ÓĞ·´Ó¦
-		//ÕâÀï³öÎÊÌâ£¬Ã»±¨´íÃ»Öµ£¬¿ÉÄÜÊÇspringÊÂÎñ£¬³ö´íÁË×Ô¶¯»Ø¹ö
-		//Ó¦¸Ã²»ÊÇÊÂÎñµÄÊÂ£¬¿ÉÄÜ¸Õµ½Ê×Ò³£¬Ã»ÓĞhibernateÃ»ÓĞsession
-		//¿ÉÄÜÊÇsession²»¹»ÓÃ
+		System.out.println("ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½");
 		articles = articleService.findAllArticle(1, MAXRESULTS) ;
 		Map<String , String> map = new LinkedHashMap<>() ;
 		for(int i = 0 ; i<articles.size() ; i++) {
 			map.put(articles.get(i).getArtId()+"", articles.get(i).getArtTitle()+"."+articles.get(i).getPubTime()) ;  
 		}
-		//ÔÙ¼ÓÉÏÊı¾İÌõÊı
+		//å†åŠ ä¸Šæ•°æ®æ¡æ•°
 		JSONObject json = JSONObject.fromObject(map) ;
 		System.out.println(map);
 		System.out.println(json);
@@ -257,9 +233,7 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		return SUCCESS ;
 	}
 	
-	/**
-	 * 	ÎÄÕÂÏêÇé
-	 */
+	//æ–‡ç« è¯¦æƒ…
 	@Action(value="artDetail",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/artDetail.jsp")})
 	public String articleDetail() {
 		Article articleTemp = new Article() ;
@@ -276,15 +250,13 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		System.out.println(article);
 		return SUCCESS ;
 	}
-	/**
-	 * É¾³ıÎÄÕÂ,ÏÈ¼ÓÈë»ØÊÕÕ¾£¬²»ÕæÕıÉ¾³ı
-	 */
+	//åˆ é™¤æ–‡ç« ,å…ˆåŠ å…¥å›æ”¶ç«™ï¼Œä¸çœŸæ­£åˆ é™¤
 	@Action(value="deleteArticle",results= {
 			@Result(name="success",type="json")
 			
 	})
 	public String delAction() {
-		System.out.println("json½øÀ´£º"+article.getArtId()+"-"+delTime);
+		System.out.println("jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+article.getArtId()+"-"+delTime);
 		
 		Article articleTemp = articleService.findById(article.getArtId()) ;		
 		Dustbin dustbin = new Dustbin() ;
@@ -299,17 +271,17 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		
 		return SUCCESS ;
 	}
-	//ĞŞ¸ÄÎÄÕÂ
+	////ä¿®æ”¹æ–‡ç« 
 	@Action(value="updateArt",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
 	public String updataArticle() {
-		System.out.println("ÒªĞŞ¸ÄµÄÎÄÕÂ£º"+article);
-		//¿ÉÄÜĞŞ¸ÄÁË±êÌâ£¬ÄÚÈİ,±Ø¶¨ĞŞ¸ÄÁËlastMod
+		System.out.println("è¦ä¿®æ”¹çš„æ–‡ç« "+article);
+		//å¯èƒ½ä¿®æ”¹äº†æ ‡é¢˜ï¼Œå†…å®¹,å¿…å®šä¿®æ”¹äº†lastMod
 		String title = article.getArtTitle() ;
 		String content = article.getArtContent() ;
 		String lastMod = article.getLastMod() ;
-		//²é³öÔ­À´µÄ
+		//æŸ¥å‡ºåŸæ¥çš„
 		article = articleService.findById(article.getArtId()) ;
 		article.setArtTitle(title);
 		article.setArtContent(content);
@@ -319,13 +291,13 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		
 		return SUCCESS ;
 	}
-	//ĞŞ¸Ä²İ¸å
+	//ä¿®æ”¹è‰ç¨¿
 	@Action(value="updateDra",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
 	public String updataDra() {
-		System.out.println("ÒªĞŞ¸ÄµÄ²İ¸å£º"+article);
-		//²éÕÒÔ­À´µÄ
+		System.out.println("è¦åˆ é™¤çš„id"+article);
+		//æŸ¥æ‰¾åŸæ¥çš„
 		Draft draft = articleService.findDraftById(article.getArtId()) ;
 		draft.setArtContent(article.getArtContent());
 		draft.setArtTitle(article.getArtTitle());
@@ -335,24 +307,24 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		returndata = "success" ;
 		return SUCCESS ;
 	}
-	//É¾³ı²İ¸å
+	//åˆ é™¤è‰ç¨¿
 	@Action(value="delDraft",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
 	public String deleteDraft() {
 		
-		System.out.println("ÒªÉ¾³ıµÄid"+article.getArtId());
+		System.out.println("è¦åˆ é™¤çš„id"+article.getArtId());
 		articleService.deleteDraft(article.getArtId());
 		return SUCCESS ;
 		
 	}
-	//É¾³ı»ØÊÕÕ¾
+	//åˆ é™¤å›æ”¶ç«™
 	@Action(value="delDustbin",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
 	public String deleteDustbin() {
 		
-		System.out.println("ÒªÉ¾³ıµÄid"+article.getArtId());
+		System.out.println("ÒªÉ¾ï¿½ï¿½ï¿½ï¿½id"+article.getArtId());
 		articleService.deleteDustbin(article.getArtId());
 		return SUCCESS ;
 		

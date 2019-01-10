@@ -15,7 +15,7 @@ import com.cm.domain.User;
 import com.cm.service.IUserService;
 import com.opensymphony.xwork2.ActionSupport;
 /**
- * ��֤��¼
+ * 验证登录
  * @author Huangjiping
  *
  */
@@ -27,9 +27,12 @@ import com.opensymphony.xwork2.ActionSupport;
 })
 
 public class loginAction extends ActionSupport {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private IUserService userService ;
-//������������ģ��
 	private String userName ;
 	private String password ;
 	private String returndata ; 
@@ -63,32 +66,31 @@ public class loginAction extends ActionSupport {
 	}
 
 	/**
-	 * 	�����û����ж��û��Ƿ���ڣ��½�һ���û������Ƿ�����
+	 * 	根据用户名判断用户是否存在
 	 */
 	@Action(value="verifyUsername",results= {@Result(name="success",type="json")},
 			params= {"root","returndata"})
 	public String verifyUsername() {
-		System.out.println("������");
-		System.out.println("ǰ�˴���"+userName);
-		//�õ����true��false
+		System.out.println("请求传入"+userName);
+		//得到结果true、false
 		returndata = String.valueOf(userService.isUserExist(userName)) ;
-		//ƴ�ӳ�json�ַ���������
+		//拼接成json字符串并返回
 		returndata = "{\"backdata\" : \""+returndata+"\"}"   ;
-		System.out.println("���ص�json�ַ�����"+returndata);
+		System.out.println("返回的json字符串"+returndata);
 	
 		return SUCCESS ;
 	}
 	
 	
 	/**
-	 * ��֤��¼
+	 * 验证登录
 	 * @return
 	 */
 	@Action(value="verifyLogin",results= {
 			@Result(name="success",location="/index.jsp"),
 			@Result(name="picture",type="redirectAction",location="indexpic",params= {"namespace","/Resource"}),
 			@Result(name="manager",type="redirectAction",location="management",params= {"namespace","/privateSource"})
-			//��chain����һ��action��ˢ��ҳ��ᵼ���ظ��ύ������redirectAction����
+			//用chain到另一个action，刷新页面会导致重复提交表单，用redirectAction不会
 	})
 	public  String Login() {
 		
@@ -96,15 +98,15 @@ public class loginAction extends ActionSupport {
 			
 			if(!user.getPassword().equals(password)) {
 				System.out.println(user.getPassword());
-				session.setAttribute("loginFail", "�������");
+				session.setAttribute("loginFail", "密码错误");
 				return "fail" ;
 				
 			}
 			
-			//��¼�ɹ����ѵ�¼��ǡ�loginInfo���浽session����
+			//登录成功，把登录标记“loginInfo”存到session域中
 			session.setAttribute("loginInfo", user);
 			
-			//ȡ���û���ԴUrl��ʵ�ִ�������ת����ȥ
+			//取出用户来源Url，实现从哪来跳转会哪去，不完善
 		String ref = request.getSession().getAttribute("login-ref").toString() ;
 		System.out.println("ҳ����Դ��"+ref);
 		

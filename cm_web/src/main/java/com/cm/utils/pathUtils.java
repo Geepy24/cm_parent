@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * ·���Ĺ�����
+ * 路径的工具类
  * @author mac
  *
  */
@@ -17,18 +17,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class pathUtils {
 	
 	/**
-	 * ��ǰ��Ŀ�ľ���·��
+	 * 当前项目的绝对路径
 	 */
 	
 	public static String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
 	
 	
 	/**
-	 * �õ���Ƶ�ļ��洢Ŀ¼�ľ���·��
+	 * 得到视频文件存储目录的绝对路径
 	 */
+	
 	
 	public static String moviePath() {
 		HttpServletRequest request = ServletActionContext.getRequest() ;
+		@SuppressWarnings("deprecation")
 		String realpath = request.getRealPath("/") ;
 		String root = request.getContextPath() ;
 		String [] temp = root.split("/") ;
@@ -37,11 +39,12 @@ public class pathUtils {
 		return filePath ;
 	}
 	/**
-	 * ��Ƶ����ͼ���ļ���λ��
+	 * 视频缩略图的文件夹位置
 	 * @return
 	 */
 	public static String mpPath() {
 		HttpServletRequest request = ServletActionContext.getRequest() ;
+		@SuppressWarnings("deprecation")
 		String realpath = request.getRealPath("/") ;
 		String root = request.getContextPath() ;
 		String [] temp = root.split("/") ;
@@ -50,11 +53,12 @@ public class pathUtils {
 		return filePath ;
 	}
 	/**
-	 * �õ�ͼƬ�ļ��е�·��
+	 * 得到图片文件夹的路径
 	 * @return
 	 */
 	public static String picturePath() {
 		HttpServletRequest request = ServletActionContext.getRequest() ;
+		@SuppressWarnings("deprecation")
 		String realpath = request.getRealPath("/") ;
 		String root = request.getContextPath() ;
 		String [] temp = root.split("/") ;

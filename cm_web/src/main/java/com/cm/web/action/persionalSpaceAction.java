@@ -14,7 +14,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cm.domain.Article;
@@ -35,9 +34,9 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import net.sf.json.JSONObject;
 /**
- * 	ÓÃÓÚ¿ØÖÆ¸öÈË¿Õ¼äÄ£¿é
- * 	typeÊ¹ÓÃjson£¬×¢Òâ£¬Ê¹ÓÃjson¼´²»½øĞĞÌø×ª²Ù×÷£¬½øÈëactionÔÙ»Øµ½Ò³ÃæÖĞÊ±£¬²»»á¸Ä±äÖµÕ»µÄÖµ£¡
- * 	ÒªÊÖ¶¯ÈëÕ»
+ * 	ç”¨äºæ§åˆ¶ä¸ªäººç©ºé—´æ¨¡å—
+ * 	typeä½¿ç”¨jsonï¼Œæ³¨æ„ï¼Œä½¿ç”¨jsonå³ä¸è¿›è¡Œè·³è½¬æ“ä½œï¼Œè¿›å…¥actionå†å›åˆ°é¡µé¢ä¸­æ—¶ï¼Œä¸ä¼šæ”¹å˜å€¼æ ˆçš„å€¼ï¼
+ * 	è¦æ‰‹åŠ¨å…¥æ ˆ
  * @author mac
  *
  */
@@ -50,7 +49,9 @@ import net.sf.json.JSONObject;
 public class persionalSpaceAction extends ActionSupport implements ModelDriven<User>{
 	
 	
-	//	request¶ÔÏó
+	
+	private static final long serialVersionUID = 1L;
+	//	requestå¯¹è±¡
 	private HttpServletRequest request = ServletActionContext.getRequest() ;
 	private String returndata ;
 	private User user =  (User) request.getSession().getAttribute("loginInfo")  ;
@@ -212,15 +213,15 @@ public List<PictureCheck> getPictureChecks() {
 		this.movieChecks = movieChecks;
 	}
 
-/**-----------------------------¶¯×÷·½·¨----------------------------**/
-	//Ê×Ò³Ìø×ª½øÈë»áÔ±Ò³Ãæ
+/**-----------------------------åŠ¨ä½œæ–¹æ³•----------------------------**/
+	//é¦–é¡µè·³è½¬è¿›å…¥ä¼šå‘˜é¡µé¢
 	@Action(value="comein",results= {
 			@Result(name="success",location="/UI2/index.html")
 			
 	})
 	public String comeIn() {
 		
-		System.out.println("µ±Ç°ÓÃ»§½øÈë¸öÈË¿Õ¼ä£º"+user);		
+		System.out.println("å½“å‰ç”¨æˆ·è¿›å…¥ä¸ªäººç©ºé—´"+user);		
 		
 		
 		return SUCCESS ;
@@ -235,45 +236,32 @@ public List<PictureCheck> getPictureChecks() {
 		
 		return SUCCESS ;
 	}
-	//ÓÃÎÄÕÂÌî³äÊ×Ò³µÄ±í¸ñ
+	//ç”¨æ–‡ç« å¡«å……é¦–é¡µçš„è¡¨æ ¼
 	@Action(value="indexArticles",results= {
 			@Result(name="success",type= "json",params= {"root","returndata"})
 	})
 	public String indexArticles() {
 		currentPage = 1 ;
-		//·ÖÒ³²éÕÒ
+		//åˆ†é¡µæŸ¥æ‰¾
 		Article article = new Article() ;
 		article.setUser(user);
 		articles = articleService.findByUser(article, currentPage, MAXRESULTS) ;
 		request.getSession().setAttribute("currentPage", currentPage);
 		
-		//json×Ö·û´®µÄ¸ñÊ½ÊÇ{"i" : "artTitle+###+pubTime###lastMod###artId"}
+		//jsonå­—ç¬¦ä¸²çš„æ ¼å¼æ˜¯{"i" : "artTitle+###+pubTime###lastMod###artId"}
 		returndata = jsonUtils.artListToJsonString(articles) ;
 		
 		return SUCCESS ;
 	}
-//	//È¥¹ÜÀíÎÄÕÂ
-//	@Action(value="toArtList",results= {@Result(name="success",location="/UI/artList.jsp")})
-//	public String toArticleList() {
-//		currentPage = 1 ;
-//		request.getSession().setAttribute("currentPage", currentPage);
-//		return SUCCESS;
-//	}
-	//ĞÂÔöÎÄÕÂ
+
+	//æ–°å¢æ–‡ç« 
 	@Action(value="userAddArt",results= {
 			@Result(name="success",location="/UI/editor.jsp")
 	})
 	public String userAddArticle() {
 		return SUCCESS;
 	}
-//	//È¥²İ¸åÏä
-//	@Action(value="toDraftList",results= {@Result(name="success",location="/UI/draftList.jsp")})
-//	public String toDraftList() {
-//		
-//		
-//		return SUCCESS ;
-//	}
-	//ÓÃ²İ¸åÌî³ä²İ¸åÏäµÄ±í¸ñ
+	//ç”¨è‰ç¨¿å¡«å……è‰ç¨¿ç®±çš„è¡¨æ ¼
 	@Action(value="draList",results= {
 			@Result(name="success",type= "json",params= {"root","returndata"})
 	})
@@ -283,23 +271,18 @@ public List<PictureCheck> getPictureChecks() {
 		Draft draft = new Draft() ;
 		draft.setUser(user);
 		
-		//·ÖÒ³²éÕÒ
+		//åˆ†é¡µæŸ¥æ‰¾
 		drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
 		
-		//json×Ö·û´®µÄ¸ñÊ½ÊÇ{"i" : "artTitle###lastMod###draId"}
+		//jsonå­—ç¬¦ä¸²çš„æ ¼å¼æ˜¯{"i" : "artTitle###lastMod###draId"}
 		returndata = jsonUtils.draListToJsonString(drafts) ;
 		
 		return SUCCESS ;
 	}
 	
 	
-//	//Ç°Íù»ØÊÕÕ¾
-//	@Action(value="toDustbinList",results= {@Result(name="success",location="/UI/dustbinList.jsp")})
-//	public String toDustbinList() {
-//		
-//		return SUCCESS ;
-//	}
-	//ÓÃ»ØÊÕÕ¾Ìî³ä²İ¸åÏäµÄ±í¸ñ
+
+	//ç”¨å›æ”¶ç«™å¡«å……è‰ç¨¿ç®±çš„è¡¨æ ¼
 		@Action(value="dustList",results= {
 				@Result(name="success",type= "json",params= {"root","returndata"})
 		})
@@ -310,16 +293,16 @@ public List<PictureCheck> getPictureChecks() {
 			Dustbin  dustbin = new Dustbin() ;
 			dustbin.setUser(user);
 			
-			//·ÖÒ³²éÕÒ
+			//åˆ†é¡µæŸ¥æ‰¾
 			dustbins = articleService.findAllDustbinByUser(dustbin,currentPage,MAXRESULTS) ;
 			
-			//json×Ö·û´®µÄ¸ñÊ½£º{"i" : "artTitle###delTime###dustId"}
+			//jsonå­—ç¬¦ä¸²çš„æ ¼å¼ï¼š{"i" : "artTitle###delTime###dustId"}
 			returndata = jsonUtils.dsutListToJsonString(dustbins) ;
 			
 			return SUCCESS ;
 		}
 	
-	//ÉÏÒ»Ò³
+		//ä¸Šä¸€é¡µ
 	@Action(value="prePage",results= {
 			@Result(name="success",type="json",params= {"root","returndata"}),
 			@Result(name="fail",type="json",params= {"root","returndata"})
@@ -329,7 +312,7 @@ public List<PictureCheck> getPictureChecks() {
 		currentPage = (int) request.getSession().getAttribute("currentPage") ;
 		currentPage = currentPage - 1 ;
 		if(currentPage <=0 ) {
-			returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+			returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 			return "fail" ;
 		}
 		
@@ -392,7 +375,7 @@ public List<PictureCheck> getPictureChecks() {
 		return "fail" ;
 	}
 		
-	//ÏÂÒ»Ò³
+	//ä¸‹ä¸€é¡µ
 	@Action(value="nPage",results= {
 			@Result(name="success",type="json",params= {"root","returndata"}),
 			@Result(name="fail",type="json",params= {"root","returndata"})
@@ -400,17 +383,17 @@ public List<PictureCheck> getPictureChecks() {
 	public String nextPage() {
 		//currentPage,pageRef
 			currentPage = (int) request.getSession().getAttribute("currentPage");
-			System.out.println("Ò³Ãæ±ê¼Ç£º"+pageRef);
+			System.out.println("é¡µé¢æ ‡è®°"+pageRef);
 			currentPage = currentPage + 1 ;
 				
-				System.out.println("ÏÂÒ»Ò³"+currentPage);
+				System.out.println("ä¸‹ä¸€é¡µ"+currentPage);
 				
 				if(pageRef.equals("dustbin")) {
 				Dustbin dustbin = new Dustbin() ;
 				dustbin.setUser(user);
 				dustbins = articleService.findAllDustbinByUser(dustbin, currentPage, MAXRESULTS) ;
 					if(dustbins.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.dsutListToJsonString(dustbins) ;
@@ -424,7 +407,7 @@ public List<PictureCheck> getPictureChecks() {
 					article.setUser(user);
 					articles = articleService.findByUser(article, currentPage, MAXRESULTS) ;
 					if(articles.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.artListToJsonString(articles) ;
@@ -438,7 +421,7 @@ public List<PictureCheck> getPictureChecks() {
 					draft.setUser(user);
 					drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
 					if(drafts.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.draListToJsonString(drafts) ;
@@ -451,7 +434,7 @@ public List<PictureCheck> getPictureChecks() {
 					
 					resources = resourceService.findAllResource("mov", user.getUserId(), currentPage, MAXRESULTS) ;
 					if(resources.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.movieListToJsonString(resources) ;
@@ -464,7 +447,7 @@ public List<PictureCheck> getPictureChecks() {
 					
 					resources = resourceService.findAllResource("pic", currentPage, MAXRESULTS) ;
 					if(resources.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.pictureListToJsonString(resources) ;
@@ -476,7 +459,7 @@ public List<PictureCheck> getPictureChecks() {
 				if(pageRef.equals("MCs")) {
 					movieChecks = resourceService.findMCsByUserId(user.getUserId(), currentPage, MAXRESULTS) ;
 					if(movieChecks.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.mcListToJsonString(movieChecks) ;
@@ -488,7 +471,7 @@ public List<PictureCheck> getPictureChecks() {
 				if(pageRef.equals("PCs")) {
 					pictureChecks = resourceService.findPCsByUserId(user.getUserId(), currentPage, MAXRESULTS) ;
 					if(pictureChecks.size() == 0) {
-						returndata = "error : Ã»ÓĞ¸ü¶àÁË£¡" ;
+						returndata = "error : æ²¡æœ‰æ›´å¤šäº†ï¼" ;
 						return "fail" ;
 					}else {
 						returndata = jsonUtils.pcListToJsonString(pictureChecks) ;
@@ -501,7 +484,7 @@ public List<PictureCheck> getPictureChecks() {
 	}
 	
 	
-	//Ç°ÍùÄ³Ò³
+	//å‰å¾€æŸé¡µ
 	@Action(value="sPage",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
@@ -557,7 +540,7 @@ public List<PictureCheck> getPictureChecks() {
 		
 	}
 		
-	//È«²¿Ò³Âë 
+	//å…¨éƒ¨é¡µç  
 	@Action(value="pages",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 
@@ -565,33 +548,33 @@ public List<PictureCheck> getPictureChecks() {
 	public String pages() {
 		Long number = 1l ;
 		Long pages ;
-		System.out.println("À´Ô´£º"+pageRef);
-		//ÎÄÕÂ
+		System.out.println("æ¥æº"+pageRef);
+		//æ–‡ç« 
 		if(pageRef.equals("article")) {
 			number = articleService.AllArticleNumber(user.getUserId()) ;
 		}
-		//²İ¸å
+		//è‰ç¨¿
 		if(pageRef.equals("draft")) {
 			 number = articleService.AllDraftNumber(user.getUserId()) ;
 		}
-		//»ØÊÕÕ¾
+		//å›æ”¶ç«™
 		if(pageRef.equals("dustbin")) {
 			number = articleService.AllDustbinNumber(user.getUserId()) ;
 		}
-		//Ïà²á,Í¨¹ıÍâ¼ü²éÕÒ×ÜÊı
+		//ç›¸å†Œ,é€šè¿‡å¤–é”®æŸ¥æ‰¾æ€»æ•°
 		if(pageRef.equals("photos")) {
 			number = resourceService.AllResourceNumber(user, "pic") ;
 		}
-		//ÊÓÆµ£¬Í¨¹ıÍâ¼ü²éÕÒ×ÜÊı
+		//è§†é¢‘ï¼Œé€šè¿‡å¤–é”®æŸ¥æ‰¾æ€»æ•°
 		if(pageRef.equals("movies")) {
 			number = resourceService.AllResourceNumber(user, "mov") ;
-			System.out.println("check£º"+number);
+			System.out.println("checkï¿½ï¿½"+number);
 		}
-		//Ïà²áÉóºËÁĞ±í
+		//ç›¸å†Œå®¡æ ¸åˆ—è¡¨
 		if(pageRef.equals("PCs")) {
 			number = resourceService.findAllPcsByUserId(user.getUserId()) ;
 		}
-		//ÊÓÆµÉóºËÁĞ±í
+		//è§†é¢‘å®¡æ ¸åˆ—è¡¨
 		if(pageRef.equals("MCs")) {
 			number = resourceService.findAllMcsByUserId(user.getUserId()) ;
 		}
@@ -604,11 +587,11 @@ public List<PictureCheck> getPictureChecks() {
 			pages = number / MAXRESULTS +1 ;
 		}
 		System.out.println(number);
-		System.out.println("×ÜÒ³Êı£º"+pages);
+		System.out.println("æ€»é¡µæ•°"+pages);
 		returndata = String.valueOf(pages) ;
 		return SUCCESS ;
 	}
-	//µ±Ç°Ò³Âë
+	//å½“å‰é¡µç 
 	@Deprecated
 	@Action(value="thePage",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
@@ -630,12 +613,12 @@ public List<PictureCheck> getPictureChecks() {
 	}
 	
 	
-	//±à¼­ÎÄÕÂ£¬°üÀ¨ÎÄÕÂ£¬»ØÊÕÕ¾£¬²İ¸å¡£²İ¸åµÄ±à¼­µÄsaveÓ¦¸ÃÊÇĞŞ¸Ä£¬¸üĞÂ²Ù×÷¡£ÆäËû²»ÓÃ¸ü¸Ä
+	//ç¼–è¾‘æ–‡ç« ï¼ŒåŒ…æ‹¬æ–‡ç« ï¼Œå›æ”¶ç«™ï¼Œè‰ç¨¿ã€‚è‰ç¨¿çš„ç¼–è¾‘çš„saveåº”è¯¥æ˜¯ä¿®æ”¹ï¼Œæ›´æ–°æ“ä½œã€‚å…¶ä»–ä¸ç”¨æ›´æ”¹
 	@Action(value="edit",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
 	public String Edit() {
-		System.out.println("Òª±à¼­µÄÄÚÈİ:"+jsonFlag+"-"+jsonId);
+		System.out.println("è¦ç¼–è¾‘çš„å†…å®¹:"+jsonFlag+"-"+jsonId);
 		Map<String, String> map = new HashMap<String, String>() ;
 		String title = "" ;
 		String content = "" ; 
@@ -661,8 +644,8 @@ public List<PictureCheck> getPictureChecks() {
 		return SUCCESS ;
 		
 	}
-	//----------------------------ÏÔÊ¾ÓÃ»§µÄÊÓÆµ£¬Í¼Æ¬ÁĞ±í----------------------
-	//ÏÔÊ¾ÓÃ»§µÄÊÓÆµÁĞ±í
+	//----------------------------æ˜¾ç¤ºç”¨æˆ·çš„è§†é¢‘ï¼Œå›¾ç‰‡åˆ—è¡¨----------------------
+	//æ˜¾ç¤ºç”¨æˆ·çš„è§†é¢‘åˆ—è¡¨
 	@Action(value="movList",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 			
@@ -676,7 +659,7 @@ public List<PictureCheck> getPictureChecks() {
 		
 		return SUCCESS ;
 	}
-	//ÏÔÊ¾ÓÃ»§µÄÍ¼Æ¬ÁĞ±í
+	//æ˜¾ç¤ºç”¨æˆ·çš„å›¾ç‰‡åˆ—è¡¨
 		@Action(value="picList",results= {
 				@Result(name="success",type="json",params= {"root","returndata"})
 				
@@ -691,8 +674,8 @@ public List<PictureCheck> getPictureChecks() {
 			return SUCCESS ;
 		}
 	
-	//----------------------------ÏÔÊ¾ÓÃ»§µÄÊÓÆµ£¬Í¼Æ¬ÉóºËÁĞ±í----------------------
-	//ÏÔÊ¾ÓÃ»§µÄ´ıÉóºËÊÓÆµÁĞ±í
+	//----------------------------æ˜¾ç¤ºç”¨æˆ·çš„è§†é¢‘ï¼Œå›¾ç‰‡å®¡æ ¸åˆ—è¡¨---------------------
+	//æ˜¾ç¤ºç”¨æˆ·çš„å¾…å®¡æ ¸è§†é¢‘åˆ—è¡¨
 		@Action(value="userMcList",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 				
@@ -705,7 +688,7 @@ public List<PictureCheck> getPictureChecks() {
 		returndata = jsonUtils.mcListToJsonString(movieChecks) ;
 		return SUCCESS ;
 	}	
-	//ÏÔÊ¾ÓÃ»§µÄ´ıÉóºËÍ¼Æ¬ÁĞ±í
+	//æ˜¾ç¤ºç”¨æˆ·çš„å¾…å®¡æ ¸å›¾ç‰‡åˆ—è¡¨
 	@Action(value="userPcList",results= {
 			@Result(name="success",type="json",params= {"root","returndata"})
 			

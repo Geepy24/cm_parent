@@ -8,127 +8,126 @@ import com.cm.domain.Resource;
 import com.cm.domain.User;
 
 /**
- * 	��Դ���ҵ���ӿ�
+ * 	service接口
  * @author Huangjiping
  *
  */
 public interface IResourceService {
 
 	/**
-	 * 	������Դ
+	 * 	保存资源
 	 */
 	void saveResource(Resource resource) ;
 	/**
-	 * 	ͨ�����ʱ�䵹���ҳ����������Դ
+	 * 	ͨ	ͨ通过类别，时间倒序分页查找所有资源
 	 */
 	List<Resource> findAllResource(String tag , Integer currentPage,Integer maxResults) ;
 	/**
-	 * 	ͨ��������û�id��ʱ�䵹���ҳ����������Դ
+	 * 	ͨ	通过类别与用户id，时间倒序分页查找所有资源
 	 */
 	List<Resource> findAllResource(String tag , Integer userId ,Integer currentPage,Integer maxResults) ;
 	
 	/**
-	 * 	ͨ���û�id��������
+	 * 通过用户id查找总数
 	 */
 	Long AllResourceNumber(User user);
 	/**
-	 * 	ͨ��id�ͷ��������Դ����
+	 * 通过id和分类查找资源总数
 	 */
 	Long AllResourceNumber(User user , String tag);
 	/**
-	 * 	���ҷ����µ���Դ����
+	 * 	查找分类下的资源总数
 	 */
 	Long AllResourceNumber(String tag);
 	/**
-	 * ������Դ����
+	 * 查找资源总数
 	 */
 	Long AllResourceNumber();
 	/**
-	 * ɾ����Դ
+	 * 删除资源
 	 */
 	void deleteResource(Integer resId) ;
 	/**
-	 * 	ͨ��id������Դ
+	 * 	ͨ通过id查找资源
 	 */
 	Resource findResourceById(Integer resId) ;
 	/**
-	 * ͨ��id������һ����¼��id
+	 * ͨ通过id查找下一条记录的id
 	 */
 	Integer nextResourceId(Integer resId,String tag) ;
 	/**
-	 * ͨ��id������һ������¼��id
+	 * 通过id查找上一个条记录的id
 	 */
 	Integer preResourceId(Integer resId,String tag) ;
-	//---------------------------------�������Ƶ��ͼƬ����---------------------------
-	//---------------------------------ͼƬ,��Ƶ���-------------------------------------------
+	//---------------------------------待审核资源---------------------------
 		/**
-		 * ��������ͼƬ
+		 * 保存待审核图片
 		 */
 		void savePictureCheck(PictureCheck pictureCheck) ;
 		/**
-		 * ����������Ƶ
+		 * 保存待审核视频
 		 */
 		void saveMovieCheck(MovieCheck movieCheck) ;
 		/**
-		 * ����picId��ѯ����pictureCheck
+		 * 根据picId查询单个pictureCheck
 		 */
 		PictureCheck findPCById(Integer picId) ;
 		/**
-		 * ����movId��ѯ����movieCheck
+		 * 根据movId查询单个movieCheck
 		 */
 		MovieCheck findMCById(Integer movId) ;
 		/**
-		 * ����checkTag��ҳ�������е�picCheck
+		 * 根据checkTag分页查找所有的picCheck
 		 */
 		List<PictureCheck> findPCsByCheckTag(Integer checkTag,Integer currentPage,Integer maxResults) ;
 		/**
-		 * ����checkTag��ҳ�������е�movCheck
+		 * 根据checkTag分页查找所有的movCheck
 		 */
 		List<MovieCheck> findMCsByCheckTag(Integer checkTag,Integer currentPage,Integer maxResults) ;
 		/**
-		 * ����userId��ҳ�������е�picCheck
+		 * 根据userId分页查找所有的picCheck
 		 */
 		List<PictureCheck> findPCsByUserId(Integer userId,Integer currentPage,Integer maxResults) ;
 		/**
-		 * ����userId��ҳ�������е�movCheck
+		 * 根据userId分页查找所有的movCheck
 		 */
 		List<MovieCheck> findMCsByUserId(Integer userId,Integer currentPage,Integer maxResults) ; 
 		/**
-		 * ����picId�޸�pc
+		 * 根据picId修改pc
 		 */
 		void updatePictureCheck(PictureCheck pictureCheck) ;
 		/**
-		 * ����movId�޸�mc
+		 * 根据movId修改mc
 		 */
 		void updateMovieCheck(MovieCheck movieCheck) ;
 		/**
-		 * ����checkTag��userId��ҳ����pc
+		 * 根据checkTag和userId分页查找pc
 		 */
 		List<PictureCheck> findPCsByTagAndUserId(Integer checkTag,Integer userId,Integer currentPage,Integer maxResults) ;
 		/**
-		 * ����checkTag��userId��ҳ����mc
+		 * 根据checkTag和userId分页查找mc
 		 */
 		List<MovieCheck> findMCsByTagAndUserId(Integer checkTag,Integer userId,Integer currentPage,Integer maxResults) ;
 		/**
-		 * ����ɾ����ͨ������Ƶ
+		 * 批量删除审通过的视频
 		 */
 		/**
-		 * ����ɾ�����ͨ����ͼƬ
+		 * 批量删除审核通过的图片
 		 */
 		/**
-		 * ���Ҵ������Ƶ����
+		 * 查找待审核视频总数
 		 */
 		Long findAllMcs() ;
 		/**
-		 * ���Ҵ����ͼƬ����
+		 * 查找待审核图片总数
 		 */
 		Long findAllPcs() ;
 		/**
-		 * ����id�����������Ƶ����
+		 * 根据id，查找审核视频总数
 		 */
 		Long findAllMcsByUserId(Integer userId) ;
 		/**
-		 * ����id���������ͼƬ����
+		 * 根据id，查找审核图片总数
 		 */
 		Long findAllPcsByUserId(Integer userId) ;
 		

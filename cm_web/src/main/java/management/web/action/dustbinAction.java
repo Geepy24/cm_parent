@@ -15,7 +15,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cm.domain.Article;
 import com.cm.domain.Dustbin;
 import com.cm.domain.User;
 import com.cm.service.IArticleService;
@@ -24,7 +23,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import net.sf.json.JSONObject;
 /**
- * ��������վ��controller
+ * 操作回收站
  * @author Huangjiping
  *
  */
@@ -32,9 +31,11 @@ import net.sf.json.JSONObject;
 @ParentPackage("json-default")
 @Result(name="fail",location="/fail.jsp")
 public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin> {
+	
+	private static final long serialVersionUID = 1L;
+
 	private Dustbin dustbin = new Dustbin() ;
-	//ģ����������dustbin
-	private Article article ;
+
 	private String returndata ;
 	private Integer currentPage ;
 	private List<Dustbin> dustbins ;
@@ -42,7 +43,7 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 	private Integer toPage ;
 	HttpSession session = ServletActionContext.getRequest().getSession() ;
 	HttpServletRequest request = ServletActionContext.getRequest() ;
-	//��ǰ�û�
+
 	private User user =(User) session.getAttribute("loginInfo")  ;
 	@Autowired
 	private IArticleService articleService ;
@@ -110,46 +111,22 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 	public void setUser(User user) {
 		this.user = user;
 	}
-	/**
-	 * ɾ��,��articleAction���Ѹ���
-	 * @return
-	 
-	@Action(value="deleteArticle",results= {@Result(name="success",type="json",
-			params= {"root","returndata"})})
-	public String delete() {
-		System.out.println("�ս�����dustbin:"+dustbin);
-		//��������
-		article = articleService.findById(dustbin.getUser().getUserId()) ;
-		System.out.println("����֮���article��"+article);
-		//��article����ɾ������
-		articleService.deleteArticle(article);
-		dustbin.setArtContent(article.getArtContent());
-		System.out.println(dustbin);
-		//��Ҫɾ�������±����dustbin��
-		articleService.saveDustbin(dustbin) ;
-		
-		
-		return SUCCESS;
-	}
-	*/
-	/**
-	 * ��ҳ�˵���ת����վ�б�
-	 */
+	
+	//首页菜单跳转回收站列表
 	@Action(value="dustbinList",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/dustbinList.jsp")})
 	public String toDustbinList() {
 		
 		currentPage = 1 ;
 		
-		//��ҳ������������
+		//分页查找所有文章
 		
 		dustbins = articleService.findAllDustbin(currentPage, MAXRESULTS) ;
 		
-		//System.out.println(dustbins.get(1));
-		//���вݸ�
+		//所有草稿
 		Long totalItems = articleService.AllDustbinNumber() ;
 		System.out.println(totalItems);
 		Long totalDustbins ;
-		//��ҳ��
+
 		if(0 == totalItems) {
 			totalDustbins = new Long(1);
 		}else if(0 == totalItems%10) {
@@ -157,7 +134,7 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 		}else {
 			totalDustbins = (totalItems/10) + 1  ;
 		}
-		//�Ž�session
+		//放进session
 		session.setAttribute("totalDustbins", totalDustbins);
 		
 		
@@ -167,9 +144,7 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 	}
 	
 	
-	/**
-	 * 	����ɾ��,Ҫ�Ƚ��������ϵ����ɾ��,��dao��
-	 */
+	//彻底删除,要先解除关联关系，再删除,在dao中
 	@Action(value="compDelete",results= {@Result(name="success",type="chain",location="dustbinList")})
 	public String cDelete() {
 		
@@ -179,9 +154,7 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 		return SUCCESS ;
 	}
 	
-	/**
-	 * 	ɾ��һҳ
-	 */
+	//删除一页
 	@Action(value="delePage",results={
 			@Result(name="success",type="chain",location="dustbinList"),
 			@Result(name="error",location="fail.jsp")
@@ -203,11 +176,10 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 		
 		return SUCCESS ;
 	}
-	//��һҳ�����б�
+	//下一页文章列表
 	@Action(value="nextDustbin",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/dustbinList.jsp")})
 	public String nPage() {
 		
-		//���ܸı�currentPage�ĵ�ַ����Ȼ�����������Ž�ֵջ����Զ���ʼ���Ǹ���ַ
 		int temp = currentPage ;
 		temp = temp + 1 ;
 		currentPage = temp ;
@@ -219,7 +191,7 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 			return SUCCESS ;
 		
 	}
-	//��һҳ�����б�
+	//上一页文章列表
 	@Action(value="preDustbin",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/dustbinList.jsp")})
 	public String pPage() {
 		
@@ -230,14 +202,11 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 			return "fail" ;
 		}
 		
-		
 		dustbins = articleService.findAllDustbin(currentPage, MAXRESULTS) ;
-		
 	
-		
 		return SUCCESS ;
 	}
-	//�����б��ҳ��ѡ��ǰ�˲�ͬҳ��ʾ���صĲ�ͬҳ������
+	//文章列表的页码选择，前端不同页显示返回的不同页的数据
 	@Action(value="selectDustbinPage",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/dustbinList.jsp")})
 	public String selectPage() {
 		
@@ -252,9 +221,7 @@ public class dustbinAction extends ActionSupport implements ModelDriven<Dustbin>
 		}
 	
 	}
-	/**
-	 * ��ת���༭ҳ��
-	 */
+	//跳转到编辑页面
 	@Action(value="toDustEdit",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/editArticle.jsp")})
 	public String toDustbinEdit() {
 		

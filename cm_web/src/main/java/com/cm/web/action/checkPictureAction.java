@@ -2,7 +2,6 @@ package com.cm.web.action;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ import com.cm.utils.pathUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 /**
- * ´¦Àí´ıÉóºËµÄÍ¼Æ¬ºÍÊÓÆµÒÔ¼°ÉóºËÍ¼Æ¬ºÍÊÓÆµ
+ * ç†å¾…å®¡æ ¸çš„å›¾ç‰‡å’Œè§†é¢‘ä»¥åŠå®¡æ ¸å›¾ç‰‡
  * @author mac
  *
  */
@@ -42,6 +41,8 @@ import com.opensymphony.xwork2.ModelDriven;
 })
 public class checkPictureAction extends ActionSupport implements ModelDriven<PictureCheck> {
 
+	
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private IResourceService resourceService ;
 	@Autowired
@@ -93,10 +94,7 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 		this.uploadFileName = uploadFileName;
 	}
 	
-	
-	
 
-	//---------------------------------ÓÃ»§Ìá½»£¬µÈ´ıÉóºË------------------------------------------------
 	
 	public int getToPage() {
 		return toPage;
@@ -122,10 +120,11 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 			@Result(name="success",location= "/UI2/addSuccess.html")
 			
 	})
+	//---------------------------------ç”¨æˆ·æäº¤ï¼Œç­‰å¾…å®¡æ ¸------------------------------------------------
 	public String addCheck() {
-		//ĞèÒªµÄĞÅÏ¢£ºÍ¼Æ¬Ãû³Æ£ºuploadFileName£¬Í¼Æ¬ÎÄ¼ş£ºupload£¬Í¼Æ¬´æ´¢ÎÄ¼ş¼ĞÎ»ÖÃ£ºfilePath
-		//±£´æµ½Êı¾İ±íµÄĞÅÏ¢£ºuri,name,com,tag,user_id
-		//Í¼Æ¬´æ´¢ÎÄ¼ş¼ĞÎ»ÖÃ
+		//éœ€è¦çš„ä¿¡æ¯ï¼šå›¾ç‰‡åç§°ï¼šuploadFileNameï¼Œå›¾ç‰‡æ–‡ä»¶ï¼šuploadï¼Œå›¾ç‰‡å­˜å‚¨æ–‡ä»¶å¤¹ä½ç½®ï¼šfilePath
+		//ä¿å­˜åˆ°æ•°æ®è¡¨çš„ä¿¡æ¯ï¼šuri,name,com,tag,user_id
+		//å›¾ç‰‡å­˜å‚¨æ–‡ä»¶å¤¹ä½ç½®
 		String filePath =  pathUtils.picturePath() ;
 		System.out.println(filePath);
 		
@@ -133,40 +132,37 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
         if(!file.exists()){ 
             file.mkdir(); 
         } 
-		System.out.println("ÎÄ¼şÂ·¾¶-ÎÄ¼şÃû-ÎÄ¼ş:"+filePath+"-"+uploadFileName+"-"+upload);
+		System.out.println("æ–‡ä»¶è·¯å¾„-æ–‡ä»¶å-æ–‡ä»¶:"+filePath+"-"+uploadFileName+"-"+upload);
 		
 		
-		pictureCheck.setCheckCom("µÈ´ıÉóºË");
-		//y¾ÍÊÇÒÑÉóºË£¬nÊÇÎ´ÉóºË£¬fÊÇÉóºË²»Í¨¹ı
+		pictureCheck.setCheckCom("ç­‰å¾…å®¡æ ¸");
+		//1å°±æ˜¯å·²å®¡æ ¸ï¼Œ0æ˜¯æœªå®¡æ ¸ï¼Œ-1æ˜¯å®¡æ ¸ä¸é€šè¿‡
 		pictureCheck.setCheckTag(0);
 		pictureCheck.setPicName(uploadFileName);
 		pictureCheck.setPicUri(filePath+"/"+uploadFileName);
 		pictureCheck.setUserId(user.getUserId());
 		
 		System.out.println(pictureCheck);
-		//±£´æµ½±í
-		resourceService.savePictureCheck(pictureCheck) ;
 		
 		
-		//±£´æµ½±¾µØ
+		
+		//ä¿å­˜åˆ°æœ¬åœ°
 		try {
+			//ä¿å­˜åˆ°è¡¨
+			resourceService.savePictureCheck(pictureCheck) ;
 			FileUtils.copyFile(upload, new File(file,uploadFileName));
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("±£´æµ½±¾µØÎÄ¼ş¼ĞÊ§°Ü");
+			System.out.println("ä¿å­˜åˆ°æœ¬åœ°æ–‡ä»¶å¤¹å¤±è´¥");
 			return "fail" ;
 		}
 		
 		
-		
-		
-		//Òª¸Ä³É·µ»ØÒ»¸öÒ³Ãæ£¬¶ø²»ÊÇjson
 		return SUCCESS ;
 	}
-	//---------------------------------¹ÜÀíÔ±ÉóºË£¬Õâ²¿·ÖÊÇjsp------------------------------------------------
+	//---------------------------------ç®¡ç†å‘˜å®¡æ ¸ï¼Œè¿™éƒ¨åˆ†æ˜¯jsp------------------------------------------------
 	
-	//ÏÔÊ¾´ıÉóºË×ÊÔ´ÁĞ±í
-	
+	//æ˜¾ç¤ºå¾…å®¡æ ¸èµ„æºåˆ—è¡¨
 	@Action(value="toPcList",results= {
 			@Result(name="success",location="/WEB-INF/jsp/management/resource/pcList.jsp")
 	})
@@ -174,14 +170,14 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 		
 		currentPage = 1 ;
 		request.getSession().setAttribute("currentPage", currentPage);
-		//²éÕÒÎ´ÉóºË
+		//æŸ¥æ‰¾æœªå®¡æ ¸
 		pictureChecks = resourceService.findPCsByCheckTag(0, currentPage, MAXRESULTS) ;
-		//¼ÓÉÏÒ³Âë
+		//åŠ ä¸Šé¡µç 
 
 		Long totalItems = resourceService.findAllPcs() ;
 		Long totalPcs ;
 				
-		//×ÜÒ³Êı
+		//æ€»é¡µæ•°
 		if(0 == totalItems) {
 			totalPcs = new Long(1);
 		}else if(0 == totalItems%10) {
@@ -196,7 +192,7 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 	}
 	
 	
-	//ÉóºË²é¿´Í¼Æ¬ÏêÇé
+	//å®¡æ ¸æŸ¥çœ‹å›¾ç‰‡è¯¦æƒ…
 	@Action(value="pcDetail",results= {
 			@Result(name="success",location= "/WEB-INF/jsp/management/resource/pcDetail.jsp")
 	})
@@ -213,7 +209,7 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 		System.out.println("2"+pictureCheck);
 		return SUCCESS ;
 	}
-	//ÉóºËÍ¼Æ¬
+	//å®¡æ ¸å›¾ç‰‡
 	@Action(value="checkPic",results= {
 			@Result(name="success",type="chain",location="toPcList")
 	})
@@ -222,13 +218,13 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 		System.out.println(pictureCheck);
 		
 		
-		//ÉóºË²»Í¨¹ı
+		//å®¡æ ¸ä¸é€šè¿‡
 		if(pictureCheck.getCheckTag() == -1) {
 			resourceService.updatePictureCheck(pictureCheck);
-			System.err.println("ÉóºË²»Í¨¹ı");
+			System.err.println("å®¡æ ¸ä¸é€šè¿‡");
 			return SUCCESS ;
 		}
-		System.out.println("ÉóºËÍ¨¹ı");
+		System.out.println("å®¡æ ¸é€šè¿‡");
 		
 		Picture picture = new Picture() ;
 		Resource resource = new Resource() ;
@@ -249,7 +245,7 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 		return SUCCESS ;
 	}
 	
-	//ÉÏÒ»Ò³
+	////ä¸Šä¸€é¡µ
 		@Action(value="prePcPage",results= {
 				@Result(name="success",location="/WEB-INF/jsp/management/resource/pcList.jsp")
 				
@@ -265,7 +261,7 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 			request.getSession().setAttribute("currentPage", currentPage);
 			return SUCCESS ;
 		}
-		//ÏÂÒ»Ò³
+		//ä¸‹ä¸€é¡µ
 		@Action(value="nextPcPage",results= {
 				@Result(name="success",location="/WEB-INF/jsp/management/resource/pcList.jsp")
 				
@@ -284,7 +280,7 @@ public class checkPictureAction extends ActionSupport implements ModelDriven<Pic
 			return SUCCESS ;
 			
 		}
-		//Ç°ÍùÄ³Ò³
+		//å‰å¾€æŸé¡µ
 		@Action(value="selectPcPage",results= {@Result(name="success",location="/WEB-INF/jsp/management/resource/pcList.jsp")})
 		public String selectPage() {
 			

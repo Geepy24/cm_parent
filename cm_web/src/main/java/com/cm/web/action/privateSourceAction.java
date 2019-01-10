@@ -1,6 +1,5 @@
 package com.cm.web.action;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -11,18 +10,17 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.hibernate.engine.jdbc.spi.ResultSetReturn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.ServletConfigAware;
 
 import com.cm.domain.User;
 import com.cm.service.IUserService;
 import com.opensymphony.xwork2.ActionSupport;
 /**
- * 	Ò»Ğ©Ë½ÓĞ×ÊÔ´ĞèÒªµÇÂ¼ÁËÖ®ºó²ÅÄÜ·ÃÎÊ
- * 	Õâ¸ö¶¯×÷ÀàÓÃÀ¹½ØÆ÷À´ÅĞ¶ÏÊÇ·ñÓĞµÇÂ¼£¬µÇÂ½ÁË¾Í·ÅĞĞ£¬Î´µÇÂ¼È¥µÇÂ¼
- * 	ÒÑµÇÂ¼²ÅÄÜ½øÀ´
- * 	µÇÂ¼Óë·ñ²é¿´
+ * 	ä¸€äº›ç§æœ‰èµ„æºéœ€è¦ç™»å½•äº†ä¹‹åæ‰èƒ½è®¿é—®
+ * 	è¿™ä¸ªåŠ¨ä½œç±»ç”¨æ‹¦æˆªå™¨æ¥åˆ¤æ–­æ˜¯å¦æœ‰ç™»å½•ï¼Œç™»é™†äº†å°±æ”¾è¡Œï¼Œæœªç™»å½•å»ç™»å½•
+ * 	å·²ç™»å½•æ‰èƒ½è¿›æ¥
+ * 	ç™»å½•ä¸å¦æŸ¥çœ‹
+ * 	ä¸å®Œå–„
  * @author Huangjiping
  *
  */
@@ -37,12 +35,14 @@ import com.opensymphony.xwork2.ActionSupport;
 @InterceptorRefs({@InterceptorRef("loginDefault")})
 public class privateSourceAction extends ActionSupport {
 
+	
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private IUserService userService ;
 	
 	/**
-	 * 	µÇÂ¼ºó²ÅÄÜ²é¿´µ½µÄÒ³Ãæ£¬·ñÔòÈ¥µÇÂ¼
-	 * 	µÇÂ¼Óë·ñ²é¿´sessionÖĞµÄloginInfo
+	 * 	ç™»å½•åæ‰èƒ½æŸ¥çœ‹åˆ°çš„é¡µé¢ï¼Œå¦åˆ™å»ç™»å½•
+	 * 	ç™»å½•ä¸å¦æŸ¥çœ‹sessionä¸­çš„loginInfo
 	 * @return
 	 */
 	
@@ -51,15 +51,15 @@ public class privateSourceAction extends ActionSupport {
 		HttpSession session = ServletActionContext.getRequest().getSession();
 		User user = (User) session.getAttribute("loginInfo") ;
 		int userId = user.getUserId() ;
-		//²éÑ¯ÊÇ²»ÊÇ¹ÜÀíÔ±
+		//æŸ¥è¯¢æ˜¯ä¸æ˜¯ç®¡ç†å‘˜
 		boolean isAds = userService.isAds(userId) ;
 		System.out.println("isAds="+isAds);
 		if(false == isAds) {
-			ServletActionContext.getRequest().setAttribute("AuthorityError","µ±Ç°ÓÃ»§ÎŞ·ÃÎÊÈ¨ÏŞ");
+			ServletActionContext.getRequest().setAttribute("AuthorityError","ï¿½ï¿½Ç°ï¿½Ã»ï¿½ï¿½Ş·ï¿½ï¿½ï¿½È¨ï¿½ï¿½");
 			return "AuthorityError" ;
 		}
 		
-		//ÊÇ¹ÜÀíÔ±£¬Ìí¼Ó¹ÜÀíÔ±±ê¼Çmanager
+		//æ˜¯ç®¡ç†å‘˜ï¼Œæ·»åŠ ç®¡ç†å‘˜æ ‡è®°manager
 		ServletActionContext.getRequest().getSession().setAttribute("manager", 1);
 		return "manager"; 
 	}
