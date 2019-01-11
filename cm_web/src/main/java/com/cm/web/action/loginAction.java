@@ -1,6 +1,5 @@
 package com.cm.web.action;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -22,8 +21,9 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("json-default")
 @Namespace("/Login")
 @Results({
-	@Result(name="login",location="/jsp/login.jsp"),
-	@Result(name="fail",location="/fail.jsp")
+	@Result(name="fail",location="/fail.jsp"),
+	@Result(name="login",location="/UI2/login.html"),
+	@Result(name="register",location="/jsp/register.jsp")
 })
 
 public class loginAction extends ActionSupport {
@@ -37,7 +37,7 @@ public class loginAction extends ActionSupport {
 	private String password ;
 	private String returndata ; 
 
-	private HttpServletRequest request = ServletActionContext.getRequest() ;
+	//private HttpServletRequest request = ServletActionContext.getRequest() ;
 
 	public String getReturndata() {
 		return returndata;
@@ -65,6 +65,10 @@ public class loginAction extends ActionSupport {
 		this.password = password;
 	}
 
+	
+	
+	
+	
 	/**
 	 * 	根据用户名判断用户是否存在
 	 */
@@ -74,8 +78,7 @@ public class loginAction extends ActionSupport {
 		System.out.println("请求传入"+userName);
 		//得到结果true、false
 		returndata = String.valueOf(userService.isUserExist(userName)) ;
-		//拼接成json字符串并返回
-		returndata = "{\"backdata\" : \""+returndata+"\"}"   ;
+		
 		System.out.println("返回的json字符串"+returndata);
 	
 		return SUCCESS ;
@@ -88,13 +91,17 @@ public class loginAction extends ActionSupport {
 	 */
 	@Action(value="verifyLogin",results= {
 			@Result(name="success",location="/index.jsp"),
-			@Result(name="picture",type="redirectAction",location="indexpic",params= {"namespace","/Resource"}),
-			@Result(name="manager",type="redirectAction",location="management",params= {"namespace","/privateSource"})
+			//@Result(name="picture",type="redirectAction",location="indexpic",params= {"namespace","/Resource"}),
+			//@Result(name="manager",type="redirectAction",location="management",params= {"namespace","/privateSource"})
+			//@Result(name="userPage",type="redirectAction",location="comein",params= {"namespace","/Persional"})
 			//用chain到另一个action，刷新页面会导致重复提交表单，用redirectAction不会
 	})
-	public  String Login() {
-		
+	public  String verifyUserLogin() {
+			
+			System.err.println("到底有没有登陆！为什么每次都拦截我！"+session.getAttribute("loginInfo"));
+			
 			User user = userService.findUserByName(userName) ;
+			System.err.println("验证："+user);
 			
 			if(!user.getPassword().equals(password)) {
 				System.out.println(user.getPassword());
@@ -105,17 +112,6 @@ public class loginAction extends ActionSupport {
 			
 			//登录成功，把登录标记“loginInfo”存到session域中
 			session.setAttribute("loginInfo", user);
-			
-			//取出用户来源Url，实现从哪来跳转会哪去，不完善
-		String ref = request.getSession().getAttribute("login-ref").toString() ;
-		System.out.println("ҳ����Դ��"+ref);
-		
-		if(-1 != ref.indexOf("indexpic")) {
-			return "picture" ;
-		}
-		if(-1 != ref.indexOf("management")) {
-			return "manager" ;
-		}
 		
 		
 			return SUCCESS ;

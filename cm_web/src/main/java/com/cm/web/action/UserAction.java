@@ -23,7 +23,9 @@ import com.opensymphony.xwork2.ModelDriven;
 		@Result(name="findOne",location="/WEB-INF/jsp/management/user/edit.jsp"),
 		@Result(name="fail",location="/fail.jsp"),
 		@Result(name="deleteSuccess",location="/WEB-INF/jsp/management/user/list.jsp"),
-		@Result(name="success",location="/WEB-INF/jsp/management/user/edit.jsp")
+		@Result(name="success",location="/WEB-INF/jsp/management/user/edit.jsp"),
+		@Result(name="login",location="/UI2/login.html"),
+		@Result(name="register",location="/jsp/register.jsp")
 })
 public class UserAction extends ActionSupport implements ModelDriven<User>{
 	
@@ -156,7 +158,18 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		
 	}
 	
-	
-	
+	/**
+	 * 去登陆
+	 */
+	@Action("login")
+	public String login() {
+		
+		return "login" ; 
+			
+	}
+	@Action("register")
+	public String register() {
+		return "register" ;
+	}
 	
 }

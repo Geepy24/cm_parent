@@ -17,7 +17,7 @@ import net.sf.json.JSONObject;
 @ParentPackage("json-default")
 @Namespace("/User")
 @Results({
-	@Result(name="success",location="/jsp/login.jsp")
+	@Result(name="success",location="/UI2/login.html")
 })
 public class userRegister extends ActionSupport implements Serializable ,ModelDriven<User>{
 	

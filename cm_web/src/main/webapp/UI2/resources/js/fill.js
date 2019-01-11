@@ -1,5 +1,5 @@
-$(document).ready(article) ; //页面开始加载文章
 $(document).ready(getUser) ; //页面开始加载用户
+$(document).ready(article) ; //页面开始加载文章
 $(document).ready(toFlag) ;	//页面开始判断前往指定状态
 
 function toFlag(){
@@ -19,6 +19,7 @@ function getUser(){
 		url : "../Persional/sendUser.action",
 		type : "get",
 		success: function(data){
+			//alert(data) ;
 			$("#userName").text(data) ;
 		}
 	}) ;
@@ -293,7 +294,7 @@ function articleContent(data){
 				"<tr>"
 					+"<td><input type='checkbox' /></td>"
 					+"<td>"+i+"</td>"
-					+"<td><a href='#' title='title'>"+artTitle+"</a></td>"
+					+"<td><a href='../Article/showArticle.action?artId="+artId+"' target='_blank'' title='title'>"+artTitle+"</a></td>"
 					+"<td>"+pubTime+"</td>"
 					+"<td>"+lastMod+"</td>"
 					+"<td><a href='javascript:void(0)' onclick='reEdit("+artId+")' title='Edit'>"

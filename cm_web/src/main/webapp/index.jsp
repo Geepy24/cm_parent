@@ -39,7 +39,7 @@
 						var publish_time = arr[1] ;
 						//alert(publish_time);
 						$("#article_table").prepend(
-					"<tr><td id='left_td'><a href='${pageContext.request.contextPath}/Article/showArticle.action?artId="+attr+"'>"+title+"</a></td>"
+					"<tr><td id='left_td'><a href='${pageContext.request.contextPath}/Article/showArticle.action?artId="+attr+"' target='_blank' >"+title+"</a></td>"
 							+"<td id='right_td'>"+publish_time+"</td></tr>" 
 					
 					) ;
@@ -70,7 +70,7 @@
 				<c:set var="userName" value="${session.loginInfo.userName}"/>
 				<c:if test="${null == userName}">
 					<span class="r"><a href="${pageContext.request.contextPath}/User/login.action">登录</a></span>
-					<span class="r"><a href="${pageContext.request.contextPath}/User/register.action">注册</a></span>
+					<span class="r"><a href="${pageContext.request.contextPath}/Login/register.action">注册</a></span>
 				</c:if>
 				
 				<c:if test="${null != userName}"  >
@@ -89,7 +89,7 @@
 				<span><a href="${pageContext.request.contextPath }/WEB-INF/jsp/brief.jsp">球队简介</a></span>
 				<span><a href="${pageContext.request.contextPath }/userResource/indexresource.action?resTag=pic">精彩图集</a></span>
 				<span><a href="${pageContext.request.contextPath }/userResource/indexresource.action?resTag=mov">视频</a></span>
-				<span><a href="${pageContext.request.contextPath}/Persional/comein.action?userId=${userId}">会员页面</a></span>
+				<span><a href="${pageContext.request.contextPath}/Persional/comein.action">个人页面</a></span>
 			</div>
 		</div>
 	</div> 
@@ -137,7 +137,7 @@
 		 	</div>
 	 </div>
 
-	
+	<s:debug></s:debug>
 
 </body>
 	 

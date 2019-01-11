@@ -55,7 +55,7 @@ public class privateSourceAction extends ActionSupport {
 		boolean isAds = userService.isAds(userId) ;
 		System.out.println("isAds="+isAds);
 		if(false == isAds) {
-			ServletActionContext.getRequest().setAttribute("AuthorityError","��ǰ�û��޷���Ȩ��");
+			ServletActionContext.getRequest().setAttribute("AuthorityError","不是管理员！");
 			return "AuthorityError" ;
 		}
 		

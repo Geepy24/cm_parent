@@ -43,8 +43,10 @@ import net.sf.json.JSONObject;
 
 @Namespace("/Persional")
 @ParentPackage("p1")
+
 @InterceptorRefs({ @InterceptorRef("loginDefault") })
-@Results({ @Result(name = "login", type = "chain", location = "login", params = { "namespace", "/User" }),
+@Results({ 
+	@Result(name="login",type="chain",location="login",params= {"namespace","/User"}),
 	@Result(name = "fail", location = "/fail.jsp") })
 public class persionalSpaceAction extends ActionSupport implements ModelDriven<User>{
 	
@@ -158,10 +160,6 @@ public class persionalSpaceAction extends ActionSupport implements ModelDriven<U
 		this.user = user;
 	}
 
-	
-
-
-	
 
 	public String getJsonFlag() {
 		return jsonFlag;
@@ -231,7 +229,7 @@ public List<PictureCheck> getPictureChecks() {
 			@Result(name="success",type="json",params= {"root","returndata"})
 	})
 	public String sendUser() {
-		
+		System.err.println(user);
 		returndata = user.getUserName() ;
 		
 		return SUCCESS ;
@@ -241,6 +239,8 @@ public List<PictureCheck> getPictureChecks() {
 			@Result(name="success",type= "json",params= {"root","returndata"})
 	})
 	public String indexArticles() {
+		System.err.println(user);
+		
 		currentPage = 1 ;
 		//分页查找
 		Article article = new Article() ;

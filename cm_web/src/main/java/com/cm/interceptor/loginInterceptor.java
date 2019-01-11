@@ -16,12 +16,15 @@ public class loginInterceptor extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		//用户数据在session域中
-		Object object = ServletActionContext.getRequest().getSession().getAttribute("loginInfo") ;
+		System.err.println("进入拦截器");
 		
+		Object object = ServletActionContext.getRequest().getSession().getAttribute("loginInfo") ;
+		System.out.println(object);
 		if(object == null) {
+			System.err.println("用户未登陆");
 			return "login" ;//没登录，去登录
 		}
-		System.out.println("当前用户"+object.toString());
+		System.err.println("当前用户"+object.toString());
 		
 		return invocation.invoke() ;  //已登录，放行
 	}

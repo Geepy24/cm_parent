@@ -33,7 +33,8 @@ import com.opensymphony.xwork2.ModelDriven;
 @Namespace("/userResource")
 @ParentPackage("p1")
 @InterceptorRefs({ @InterceptorRef("loginDefault") })
-@Results({ @Result(name = "login", type = "chain", location = "login", params = { "namespace", "/User" }),
+@Results({
+		@Result(name = "login", type = "chain", location = "login", params = { "namespace", "/User" }),
 		@Result(name = "fail", location = "/fail.jsp") })
 public class userResourceAction extends ActionSupport implements Serializable, ModelDriven<Resource> {
 

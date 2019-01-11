@@ -135,7 +135,7 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 	
 	
 	//在文章展示模板中显示文章，需要的参数为文章ID
-	@Action(value="showArticle",results={@Result(name="success",location="/WEB-INF/jsp/management/article/show.jsp")})
+	@Action(value="showArticle",results={@Result(name="success",location="/articleUI/show.jsp")})
 	public String showPage() {
 		
 		 
