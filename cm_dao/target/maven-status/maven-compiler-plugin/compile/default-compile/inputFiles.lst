@@ -1,0 +1,17 @@
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Picture.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/User.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Draft.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/PictureCheck.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/dao/impl/ArticleDaoImpl.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/dao/impl/ResourceDaoImpl.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/MovieCheck.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Ads.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Article.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Resource.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/dao/IArticleDao.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/dao/IResourceDao.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Movie.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/dao/IUserDao.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/dao/impl/UserDaoImpl.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/MediaPreview.java
+/Users/mac/eclipse-workspace/cm_parent/cm_dao/src/main/java/com/cm/domain/Dustbin.java
