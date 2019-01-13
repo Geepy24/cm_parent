@@ -125,7 +125,7 @@ public class articleAction extends ActionSupport implements ModelDriven<Article>
 		article.setUser(user);
 		article.setAdsName(user.getUserName());
 		article.setLastMod(article.getPubTime());
-		
+		System.out.println("中文有问题吗？"+article);
 		articleService.saveArticle(article);
 		
 		System.out.println(article);
