@@ -7,6 +7,9 @@
   </parent>
   <artifactId>cm_web</artifactId>
   <packaging>war</packaging>
+  <build>
+  	<finalName>cm_web-4</finalName>
+  </build>
   <dependencies>
   	<dependency>
   		<groupId>com.geepy.cm</groupId>

@@ -262,13 +262,11 @@ public class ArticleDaoImpl implements IArticleDao {
 	 */
 	@Override
 	public Long AllDraftNumber(Integer authorId) {
-		User user = new User() ;
-		user.setUserId(authorId);
-		String sql = "SELECT COUNT(*) FROM Draft WHERE user=:id" ;
-		String param = "id" ;
-		User value = user  ;
-		return  (Long) hibernateTemplate.findByNamedParam(sql, param, value).get(0) ;
-				
+		String hql = "SELECT COUNT(*) FROM Draft WHERE user.userId=?" ;
+		System.err.println("count");
+		Long number =   (Long) hibernateTemplate.find(hql, authorId).get(0) ;
+		System.err.println(number);
+		return number ;
 	}
 	@Override
 	public void deleteDraft(Integer draId) {

@@ -121,14 +121,14 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
  */
 	@Action(value="toDraftList",results= {@Result(name="success",location="/WEB-INF/jsp/management/article/tempList.jsp")})
 	public String toList() {
-		HttpServletRequest request = ServletActionContext.getRequest() ;
-		System.out.println("页面来源"+request.getRequestURL());
+		//HttpServletRequest request = ServletActionContext.getRequest() ;
+		//System.out.println("页面来源"+request.getRequestURL());
 		
 		currentPage = 1 ;
 		drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 		
 		//所有草稿
-		Long totalItems = articleService.AllDraftNumber(draft.getUser().getUserId()) ;
+		Long totalItems = articleService.AllDraftNumber(user.getUserId()) ;
 		Long totalPages ;
 		//总页数
 		if(0 == totalItems) {
