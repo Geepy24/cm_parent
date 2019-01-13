@@ -67,9 +67,9 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDao.find(content);
 	}
 	
-	public List<Article> findByUser(Article article,Integer currentPage,Integer maxResults){
+	public List<Article> findByUser(Integer userId,Integer currentPage,Integer maxResults){
 		
-		return articleDao.findByUser(article, currentPage, maxResults) ;
+		return articleDao.findByUser(userId, currentPage, maxResults) ;
 		
 	} 
 //-------------------草稿箱----------------------------
@@ -88,9 +88,9 @@ public class ArticleServiceImpl implements IArticleService {
 	}
 
 	@Override
-	public List<Draft> findAllDraft(Draft draft ,Integer currentPage, Integer maxResults) {
+	public List<Draft> findAllDraft(Integer userId ,Integer currentPage, Integer maxResults) {
 
-		return articleDao.findAllDraft(draft,currentPage,maxResults);
+		return articleDao.findAllDraft(userId,currentPage,maxResults);
 	}
 
 	@Override
@@ -143,9 +143,9 @@ public class ArticleServiceImpl implements IArticleService {
 	}
 
 	@Override
-	public List<Dustbin> findAllDustbinByUser(Dustbin dustbin, Integer currentPage, Integer maxresults) {
+	public List<Dustbin> findAllDustbinByUser(Integer userId, Integer currentPage, Integer maxresults) {
 		
-		return articleDao.findAllDustbinByUser(dustbin, currentPage, maxresults);
+		return articleDao.findAllDustbinByUser(userId, currentPage, maxresults);
 	}
 
 	@Override

@@ -13,8 +13,6 @@ public class Article implements Serializable {
 	private int artId ;
 	private String artTitle ;
 	private String artContent ;
-//	private int authorId ;
-//	private String authorName ;
 	private String adsName ;
 	private String pubTime ;
 	private String lastMod ;
@@ -82,7 +80,7 @@ public class Article implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Article [artId=" + artId + ", artTitle=" + artTitle + ", artContent=" + artContent + ", authorId="
+		return "Article [artId=" + artId + ", artTitle=" + artTitle + ", artContent=" + artContent 
 				+ ", adsName=" + adsName + ", pubTime=" + pubTime
 				+ ", lastMod=" + lastMod + "]";
 	}

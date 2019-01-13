@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -128,10 +129,9 @@ public class ArticleDaoImpl implements IArticleDao {
 
 			System.out.println(articles);
 		} catch (Exception e) {
-			System.out.println("����catch");
+			System.out.println("catch");
 			return null;
 		}
-		System.out.println("����");
 		System.out.println(articles);
 		session.close();
 		return articles;
@@ -141,10 +141,20 @@ public class ArticleDaoImpl implements IArticleDao {
 	/**
 	 * 分页查找指定用户的所有文章，每页10条
 	 */
-	public List<Article> findByUser(Article article,Integer currentPage,Integer maxResults){
+	public List<Article> findByUser(Integer userId,Integer currentPage,Integer maxResults){
 		
 		
-		return hibernateTemplate.findByExample(article, (currentPage-1)*maxResults, maxResults) ;
+		String hql = "From Article WHERE user.userId="+userId ;
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql) ;
+		//设置开始查询的对象索引  当前页面-1 乘以每页最大条目数
+		query.setFirstResult((currentPage-1)*maxResults) ;
+		//设置每页最大条目数
+		query.setMaxResults(maxResults) ;
+		return query.list() ;
+		
+		
+		
+		//return hibernateTemplate.findByExample(article, (currentPage-1)*maxResults, maxResults) ;
 		
 	}
 	
@@ -160,20 +170,16 @@ public class ArticleDaoImpl implements IArticleDao {
 		Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
 		String hql = "SELECT "+content+" FROM Article ORDER BY artId DESC ";
 		try {
-			System.out.println("����dao");
 			Query query = session.createQuery(hql);
-			// ���ÿ�ʼ��ѯ�Ķ������� ��ǰҳ��-1 ����ÿҳ�����Ŀ��
 			query.setFirstResult(0);
-			// ����ÿҳ�����Ŀ��
 			query.setMaxResults(10);
 			System.out.println(query);
 			list = query.list();
 
 		} catch (Exception e) {
-			System.out.println("����catch");
+			System.out.println("catch");
 			return null;
 		}
-		System.out.println("����");
 		session.close();
 		return list;
 		
@@ -238,10 +244,16 @@ public class ArticleDaoImpl implements IArticleDao {
 	 * 	分页查询，find的分页方法
 	 */
 	@Override
-	public List<Draft> findAllDraft(Draft draft , Integer currentPage, Integer maxResults) {
+	public List<Draft> findAllDraft(Integer userId , Integer currentPage, Integer maxResults) {
 		
+		String hql = "From Draft WHERE user.userId="+userId ;
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql) ;
+		//设置开始查询的对象索引  当前页面-1 乘以每页最大条目数
+		query.setFirstResult((currentPage-1)*maxResults) ;
+		//设置每页最大条目数
+		query.setMaxResults(maxResults) ;
+		return query.list() ;
 		
-		return hibernateTemplate.findByExample(draft, (currentPage-1)*maxResults, maxResults) ;
 		
 		
 	}
@@ -324,8 +336,16 @@ public class ArticleDaoImpl implements IArticleDao {
 	}
 
 	@Override
-	public List<Dustbin> findAllDustbinByUser(Dustbin dustbin, Integer currentPage, Integer maxresults) {
-		return hibernateTemplate.findByExample(dustbin, (currentPage-1)*maxresults, maxresults);
+	public List<Dustbin> findAllDustbinByUser(Integer userId, Integer currentPage, Integer maxresults) {
+		
+		String hql = "From Dustbin WHERE user.userId="+userId ;
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql) ;
+		//设置开始查询的对象索引  当前页面-1 乘以每页最大条目数
+		query.setFirstResult((currentPage-1)*maxresults) ;
+		//设置每页最大条目数
+		query.setMaxResults(maxresults) ;
+		return query.list() ;
+		
 	}
 	/**
 	 * 修改草稿

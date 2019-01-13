@@ -23,8 +23,8 @@
 			//读取标题与编辑器中的html 
 			var article_title = $('#medium-input').val() ;
 			var article_content = editor.txt.html()
-	        alert("标题："+article_title) ;
-			alert("内容："+article_content) ;
+	        //alert("标题："+article_title) ;
+			//alert("内容："+article_content) ;
 			
 			//当前的时间
 			var date = new Date() ;
@@ -44,7 +44,7 @@
 					"pubTime"  : now ,
 					"artContent" : article_content
 			} ;
-			alert("要发送的内容"+JSON.stringify(content)) ;
+			//alert("要发送的内容"+JSON.stringify(content)) ;
 			
 			$.ajax({
 			//注意url的写法
@@ -57,7 +57,7 @@
 				//取出保存到数据库后返回的文章ID
 				var article_id = data.artId ;
 				alert("发布成功") ;
-				alert(article_id) ;
+				//alert(article_id) ;
 				//用get方式直接给另一个页面传文章id
 				window.location = "../userPubSuccess.jsp?artId="+article_id;
 				
@@ -96,7 +96,7 @@
 				"lastMod"  : now ,
 				"artContent" : article_content
 		} ;
-		alert(JSON.stringify(content)) ;
+		//alert(JSON.stringify(content)) ;
 		$.ajax({
 		//注意url的写法
 		url : '../Article/saveTemp.action' ,
@@ -111,7 +111,7 @@
 //			var dra_id = data.draId ;
 //			var user_id = data.userId ;
 //			alert(dra_id+"-"+author_id) ;
-			alert("保存成功") ;
+			alert("保存成功，您可以前往草稿箱查看") ;
 			//保存成功后前往草稿箱
 			
 			
@@ -137,7 +137,7 @@
 					"jsonId" : id ,
 					"jsonFlag" : flag  
 			}
-			alert(flag+"-"+id) ;
+			//alert(flag+"-"+id) ;
 			$("#id").val(id) ;
 			//需要返回标题和内容
 			$.ajax({

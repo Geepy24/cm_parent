@@ -125,10 +125,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 		System.out.println("页面来源"+request.getRequestURL());
 		
 		currentPage = 1 ;
-		draft.setUser(user);
-		System.out.println(draft.getDraId());
-		System.out.println(draft.getUser().getUserId());
-		drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+		drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 		
 		//所有草稿
 		Long totalItems = articleService.AllDraftNumber(draft.getUser().getUserId()) ;
@@ -156,7 +153,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			draft.setUser(user);
 			
 			
-			drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+			drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 			if(drafts.size() == 0) {
 				return "fail" ;
 			}
@@ -174,7 +171,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 				return "fail" ;
 			}
 			draft.setUser(user);
-			drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+			drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 			
 		
 			
@@ -187,7 +184,7 @@ public class draftAction extends ActionSupport implements ModelDriven<Draft> {
 			System.out.println(toPage);
 			currentPage = toPage ;
 			draft.setUser(user);
-			drafts = articleService.findAllDraft(draft,toPage, MAXRESULTS) ;
+			drafts = articleService.findAllDraft(user.getUserId(),toPage, MAXRESULTS) ;
 			
 		
 			

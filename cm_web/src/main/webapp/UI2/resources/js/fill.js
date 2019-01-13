@@ -15,6 +15,8 @@ function toFlag(){
 	
 }
 function getUser(){
+	//加上一个延迟的操作
+	
 	$.ajax({
 		url : "../Persional/sendUser.action",
 		type : "get",
@@ -46,10 +48,18 @@ function article(){
 			}, 
 			dataType : "JSON" ,
 			success:function(data){
+				if(data.indexOf("DOCTYPE") != -1){
+					alert("请重新进入个人页面") ;
+					$("#userName").html("xxx") ;
+					return ;
+				}
 				var data = JSON.parse(data) ;
 				articleContent(data) ;
 				$("#n1").html(1) ;
 				
+			},
+			error:function(){
+				alert("未知错误") ;
 			}
 		}) ;
 	}

@@ -53,12 +53,15 @@ public class ResourceDaoImpl implements IResourceDao {
 
 	@Override
 	public List<Resource> findAllResource(String tag, Integer userId, Integer currentPage, Integer maxResults) {
-		Resource resource = new Resource() ;
-		resource.setResTag(tag); 
-		User user = new User() ;
-		user.setUserId(userId);
-		resource.setUser(user);
-		return hibernateTemplate.findByExample(resource, (currentPage-1)*maxResults, maxResults) ;
+		
+		String hql = "From Resource WHERE user.userId="+userId+" AND resTag='"+tag+"'" ;
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(hql) ;
+		//设置开始查询的对象索引  当前页面-1 乘以每页最大条目数
+		query.setFirstResult((currentPage-1)*maxResults) ;
+		//设置每页最大条目数
+		query.setMaxResults(maxResults) ;
+		return query.list() ;
+		
 	}
 
 	@Override

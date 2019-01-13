@@ -219,7 +219,7 @@ public List<PictureCheck> getPictureChecks() {
 	})
 	public String comeIn() {
 		
-		System.out.println("当前用户进入个人空间"+user);		
+		System.out.println("当前用户进入个人空间"+user.getUserId());		
 		
 		
 		return SUCCESS ;
@@ -243,9 +243,8 @@ public List<PictureCheck> getPictureChecks() {
 		
 		currentPage = 1 ;
 		//分页查找
-		Article article = new Article() ;
-		article.setUser(user);
-		articles = articleService.findByUser(article, currentPage, MAXRESULTS) ;
+		
+		articles = articleService.findByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 		request.getSession().setAttribute("currentPage", currentPage);
 		
 		//json字符串的格式是{"i" : "artTitle+###+pubTime###lastMod###artId"}
@@ -268,11 +267,9 @@ public List<PictureCheck> getPictureChecks() {
 	public String draftList() {
 		currentPage = 1 ;
 		request.getSession().setAttribute("currentPage", currentPage);
-		Draft draft = new Draft() ;
-		draft.setUser(user);
 		
 		//分页查找
-		drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+		drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 		
 		//json字符串的格式是{"i" : "artTitle###lastMod###draId"}
 		returndata = jsonUtils.draListToJsonString(drafts) ;
@@ -290,11 +287,9 @@ public List<PictureCheck> getPictureChecks() {
 			
 			currentPage = 1 ;
 			request.getSession().setAttribute("currentPage", currentPage);
-			Dustbin  dustbin = new Dustbin() ;
-			dustbin.setUser(user);
 			
 			//分页查找
-			dustbins = articleService.findAllDustbinByUser(dustbin,currentPage,MAXRESULTS) ;
+			dustbins = articleService.findAllDustbinByUser(user.getUserId(),currentPage,MAXRESULTS) ;
 			
 			//json字符串的格式：{"i" : "artTitle###delTime###dustId"}
 			returndata = jsonUtils.dsutListToJsonString(dustbins) ;
@@ -317,25 +312,19 @@ public List<PictureCheck> getPictureChecks() {
 		}
 		
 		if(pageRef.equals("dustbin")) {
-			Dustbin dustbin = new Dustbin() ;
-			dustbin.setUser(user);
-			dustbins = articleService.findAllDustbinByUser(dustbin, currentPage, MAXRESULTS) ;
+			dustbins = articleService.findAllDustbinByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 			returndata = jsonUtils.dsutListToJsonString(dustbins) ;
 			request.getSession().setAttribute("currentPage", currentPage);
 			return SUCCESS ;
 		}
 		if(pageRef.equals("article")) {
-			Article article = new Article() ;
-			article.setUser(user);
-			articles = articleService.findByUser(article, currentPage, MAXRESULTS) ;
+			articles = articleService.findByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 			returndata = jsonUtils.artListToJsonString(articles) ;
 			request.getSession().setAttribute("currentPage", currentPage);
 			return SUCCESS ;
 		}
 		if(pageRef.equals("draft")) {
-			Draft draft = new Draft() ;
-			draft.setUser(user);
-			drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+			drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 			returndata = jsonUtils.draListToJsonString(drafts) ;
 			request.getSession().setAttribute("currentPage", currentPage);
 			return SUCCESS ;
@@ -389,9 +378,7 @@ public List<PictureCheck> getPictureChecks() {
 				System.out.println("下一页"+currentPage);
 				
 				if(pageRef.equals("dustbin")) {
-				Dustbin dustbin = new Dustbin() ;
-				dustbin.setUser(user);
-				dustbins = articleService.findAllDustbinByUser(dustbin, currentPage, MAXRESULTS) ;
+				dustbins = articleService.findAllDustbinByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 					if(dustbins.size() == 0) {
 						returndata = "error : 没有更多了！" ;
 						return "fail" ;
@@ -403,9 +390,7 @@ public List<PictureCheck> getPictureChecks() {
 					
 				}
 				if(pageRef.equals("article")) {
-					Article article = new Article() ;
-					article.setUser(user);
-					articles = articleService.findByUser(article, currentPage, MAXRESULTS) ;
+					articles = articleService.findByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 					if(articles.size() == 0) {
 						returndata = "error : 没有更多了！" ;
 						return "fail" ;
@@ -417,9 +402,7 @@ public List<PictureCheck> getPictureChecks() {
 					
 				}
 				if(pageRef.equals("draft")) {
-					Draft draft = new Draft() ;
-					draft.setUser(user);
-					drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+					drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 					if(drafts.size() == 0) {
 						returndata = "error : 没有更多了！" ;
 						return "fail" ;
@@ -494,23 +477,17 @@ public List<PictureCheck> getPictureChecks() {
 		request.getSession().setAttribute("currentPage", currentPage);
 		System.out.println(currentPage);
 		if(pageRef.equals("article")) {
-			Article article = new Article() ;
-			article.setUser(user);
-			articles = articleService.findByUser(article, currentPage, MAXRESULTS) ;
+			articles = articleService.findByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 			returndata = jsonUtils.artListToJsonString(articles) ;
 			return SUCCESS ;
 		}
 		if(pageRef.equals("draft")) {
-			Draft draft = new Draft() ;
-			draft.setUser(user);
-			drafts = articleService.findAllDraft(draft, currentPage, MAXRESULTS) ;
+			drafts = articleService.findAllDraft(user.getUserId(), currentPage, MAXRESULTS) ;
 			returndata = jsonUtils.draListToJsonString(drafts) ;
 			return SUCCESS ;
 		}
 		if(pageRef.equals("dustbin")) {
-			Dustbin dustbin = new Dustbin() ;
-			dustbin.setUser(user);
-			dustbins = articleService.findAllDustbinByUser(dustbin, currentPage, MAXRESULTS) ;
+			dustbins = articleService.findAllDustbinByUser(user.getUserId(), currentPage, MAXRESULTS) ;
 			returndata = jsonUtils.dsutListToJsonString(dustbins) ;
 			return SUCCESS ;
 		}

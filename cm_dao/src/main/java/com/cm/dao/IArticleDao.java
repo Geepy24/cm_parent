@@ -54,7 +54,7 @@ public interface IArticleDao {
 	/**
 	 * 分页查找用户的所有文章
 	 */
-	public List<Article> findByUser(Article article,Integer currentPage,Integer maxResults);
+	public List<Article> findByUser(Integer userId,Integer currentPage,Integer maxResults);
 //---------------草稿箱操作------------------
 	
 	/**
@@ -69,7 +69,7 @@ public interface IArticleDao {
 	/**
 	 * 根据用户分页查找所有草稿
 	 */
-	List<Draft> findAllDraft(Draft draft,Integer currentPage,Integer maxResults);
+	List<Draft> findAllDraft(Integer userId,Integer currentPage,Integer maxResults);
 	/**
 	 * 根据用户Id查找草稿总数
 	 * @param authorId
@@ -125,7 +125,7 @@ public interface IArticleDao {
 	 * @param maxresults
 	 * @return
 	 */
-	List<Dustbin> findAllDustbinByUser(Dustbin dustbin, Integer currentPage, Integer maxresults);
+	List<Dustbin> findAllDustbinByUser(Integer userId, Integer currentPage, Integer maxresults);
 	
 	
 	
