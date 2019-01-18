@@ -36,6 +36,8 @@
 	<TR>
 		<TD><a href="${pageContext.request.contextPath }/userResource/prePage.action?currentPage=${currentPage}">上一页</a></TD>
 		<TD><a href="${pageContext.request.contextPath }/userResource/nextPage.action?currentPage=${currentPage}">下一页</a></TD>
+		<TD><a href="${pageContext.request.contextPath }/index.jsp">返回首页</a></TD>
+		
 	</TR>
 	
 </TABLE>

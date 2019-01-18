@@ -12,16 +12,22 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 public class loginInterceptor extends AbstractInterceptor {
 
 	private static final long serialVersionUID = 1L;
+	
+
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		//用户数据在session域中
 		System.err.println("进入拦截器");
-		
+		//从哪进来
+		StringBuffer url = ServletActionContext.getRequest().getRequestURL() ;
+		System.out.println("页面来源："+url);
 		Object object = ServletActionContext.getRequest().getSession().getAttribute("loginInfo") ;
 		System.out.println(object);
+		ServletActionContext.getRequest().getSession().setAttribute("gowhere", url);
 		if(object == null) {
 			System.err.println("用户未登陆");
+			
 			return "login" ;//没登录，去登录
 		}
 		System.err.println("当前用户"+object.toString());

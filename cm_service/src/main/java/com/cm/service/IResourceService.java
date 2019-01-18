@@ -59,6 +59,10 @@ public interface IResourceService {
 	 * 通过id查找上一个条记录的id
 	 */
 	Integer preResourceId(Integer resId,String tag) ;
+	/**
+	 * 更新资源
+	 */
+	void updateResource(Resource resource) ;
 	//---------------------------------待审核资源---------------------------
 		/**
 		 * 保存待审核图片

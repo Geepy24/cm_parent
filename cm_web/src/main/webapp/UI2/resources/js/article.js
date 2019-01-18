@@ -73,11 +73,11 @@
 		function pages(){
 			var flag = $("#column1").text() ;
 			
-		//	alert(flag) ;
+			//alert(flag) ;
 			var content = {
 					"pageRef"	  :	flag 
 			} ;
-			//alert(flag) ;
+			
 			$.ajax({
 				url : "../Persional/pages.action" ,
 				type : "get" ,

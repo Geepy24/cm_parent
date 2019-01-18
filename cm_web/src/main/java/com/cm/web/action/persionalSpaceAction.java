@@ -239,7 +239,8 @@ public List<PictureCheck> getPictureChecks() {
 			@Result(name="success",type= "json",params= {"root","returndata"})
 	})
 	public String indexArticles() {
-		System.err.println(user);
+		
+		System.err.println("当前用户进入个人页面！！"+user);
 		
 		currentPage = 1 ;
 		//分页查找
@@ -525,7 +526,7 @@ public List<PictureCheck> getPictureChecks() {
 	public String pages() {
 		Long number = 1l ;
 		Long pages ;
-		System.out.println("来源"+pageRef);
+		System.err.println("页码事件来源"+pageRef);
 		//文章
 		if(pageRef.equals("article")) {
 			number = articleService.AllArticleNumber(user.getUserId()) ;
@@ -545,7 +546,6 @@ public List<PictureCheck> getPictureChecks() {
 		//视频，通过外键查找总数
 		if(pageRef.equals("movies")) {
 			number = resourceService.AllResourceNumber(user, "mov") ;
-			System.out.println("check��"+number);
 		}
 		//相册审核列表
 		if(pageRef.equals("PCs")) {
@@ -679,4 +679,46 @@ public List<PictureCheck> getPictureChecks() {
 		
 		return SUCCESS ;
 	}
+	//删除图片或视频
+	@Action(value="delresource",results= {
+			@Result(name="success",type="json",params= {"root","returndata"})
+	})
+	public String deleteResource() {
+		
+		System.out.println(jsonId);
+		Resource resourceTemp = resourceService.findResourceById(jsonId) ;
+		//解除resource和user的关系
+		resourceTemp.setUser(null);
+		resourceTemp.setMovie(null);
+		resourceTemp.setPicture(null);
+		resourceService.updateResource(resourceTemp);
+		
+		resourceService.deleteResource(jsonId);
+		returndata = "删除成功！" ;
+		return SUCCESS ;
+	}
+	
+//--------------------------展示，更改个人信息--------------------------
+	@Action(value="userInfo",results= {
+			@Result(name="success",type="json",params= {"root","returndata"})
+	})
+	public String editPersionalInfo() {
+		System.err.println("userInfo"+user);
+		//需要回送数据：userName,realName,tel,userId
+		String userName = user.getUserName() ;
+		String realName = user.getRealName() ;
+		String tel = user.getTel() ;
+		String id = String.valueOf(user.getUserId()) ;
+		Map<String, String> map = new HashMap<>() ;
+		map.put("userName", userName) ;
+		map.put("realName", realName) ;
+		map.put("tel", tel) ;
+		map.put("id", id) ;
+		//System.out.println(userName+"-"+realName+"-"+tel+"-"+id);
+		JSONObject jsonObject = JSONObject.fromObject(map) ;
+		returndata = jsonObject.toString() ;
+		
+		return SUCCESS ;
+	}
+	
 }

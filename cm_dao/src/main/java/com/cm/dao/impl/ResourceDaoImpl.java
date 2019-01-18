@@ -193,5 +193,10 @@ public class ResourceDaoImpl implements IResourceDao {
 		public Long findAllPcsByUserId(Integer userId) {
 			return (Long) hibernateTemplate.find("SELECT COUNT(*) FROM PictureCheck WHERE userId=?",userId).get(0);
 		}
+		@Override
+		public void updateResource(Resource resource) {
+			hibernateTemplate.update(resource);
+			
+		}
 
 }

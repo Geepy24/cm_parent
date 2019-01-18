@@ -39,7 +39,8 @@ function article(){
 			$("#column2").html("Title") ;
 			$("#column3").html("Publish Time") ;
 			$("#column4").html("Last Modify") ;
-			$("#rows").html("") ;		
+			$("#rows").html("") ;	
+			
 		$.ajax({
 			type : "GET" ,
 			url : "../Persional/indexArticles.action",
@@ -286,6 +287,40 @@ function article(){
 			}) ;
 			
 		}		
+//----------------------------------个人资料----------------------------------
+		function userInfo(){
+			$("#tab2").hide() ;
+			$("#tab3").hide() ;
+			$("#tab1").show() ;
+			
+			$("#column1").html("用户名") ;
+			$("#column2").html("真实姓名") ;
+			$("#column3").html("联系方式") ;
+			$("#column4").hide() ;
+			$("#rows").html("") ;
+			
+			$.ajax({
+				type : "GET" ,
+				url : "../Persional/userInfo.action",
+				data : {
+					
+				}, 
+				dataType : "JSON" ,
+				success:function(data){
+					//要两次转换才能将传回的json字符串变成json对象
+					var data = JSON.parse(data) ;
+					userInfoContent(data) ;
+					$("#n1").html(1) ;
+					
+				}
+			}) ;
+			
+			
+			
+		}
+		
+		
+		
 		
 //--------------------根据不同的点击内容改变不同的表格样式和内容填充(用于ajax的success)--------------------------
 function articleContent(data){
@@ -393,9 +428,9 @@ function photosContent(data){
 					+"<td><a href='javascript:void(0)' onclick='' title='title'><img style='width:50px;height:50px' src='/pic/"+picName+"' /></a></td>"
 					+"<td>"+resCom+"</td>"
 					+"<td>"+pubTime+"</td>"
-					+"<td><a href='javascript:void(0)' onclick='' title='Edit'>"
+					+"<td><a href='javascript:void(0)' onclick='nogood()' title='Edit'>"
 					+"<img src='../UI2/resources/images/icons/pencil.png' alt='编辑' /></a>"
-					+"<a href='javascript:void(0)' onclick='' title='Delete'><img src='../UI2/resources/images/icons/cross.png' alt='删除' /></a>"
+					+"<a href='javascript:void(0)' onclick='delpic("+resId+")' title='Delete'><img src='../UI2/resources/images/icons/cross.png' alt='删除' /></a>"
 					+"</td>"
 				+"</tr>") ;
 		
@@ -422,9 +457,9 @@ function moviesContent(data){
 					+"<td><a href='javascript:void(0)' onclick='' title='title'><img style='width:50px;height:50px' src='/movpre/"+mpName+"' /></a></td>"
 					+"<td>"+resCom+"</td>"
 					+"<td>"+pubTime+"</td>"
-					+"<td><a href='javascript:void(0)' onclick='' title='Edit'>"
+					+"<td><a href='javascript:void(0)' onclick='nogood()' title='Edit'>"
 					+"<img src='../UI2/resources/images/icons/pencil.png' alt='编辑' /></a>"
-					+"<a href='javascript:void(0)' onclick='' title='Delete'><img src='../UI2/resources/images/icons/cross.png' alt='删除' /></a>"
+					+"<a href='javascript:void(0)' onclick='delmov("+resId+")' title='Delete'><img src='../UI2/resources/images/icons/cross.png' alt='删除' /></a>"
 					+"</td>"
 				+"</tr>") ;
 		
@@ -457,7 +492,7 @@ function pcsContent(data){
 		$("#rows").prepend(
 				"<tr>"
 					+"<td><input type='checkbox' /></td>"
-					+"<td><a href='javascript:void(0)' onclick='' title='title'><img style='width:50px;height:50px' src='/pic/"+picName+"' /></a></td>"
+					+"<td><a href='javascript:void(0)' onclick='nogood()' title='title'><img style='width:50px;height:50px' src='/pic/"+picName+"' /></a></td>"
 					+"<td>"+checkTag+"</td>"
 					+"<td>"+checkCom+"</td>"
 				+"</tr>") ;
@@ -501,10 +536,58 @@ function mcsContent(data){
 	
 			
 }
+function userInfoContent(data){
+	var backdata = JSON.parse(data) ;
+	//alert(backdata.userName) ;
+	$("#rows").prepend(
+			"<tr>"
+				+"<td><input type='checkbox' /></td>"
+				+"<td>"+backdata.userName+"</td>"
+				+"<td>"+backdata.realName+"</td>"
+				+"<td>"+backdata.tel+"</td>"
+				+"<td><a href='javascript:void(0)' onclick='nogood()' title='Edit'>"
+				+"<img src='../UI2/resources/images/icons/pencil.png' alt='编辑' /></a>"
+				+"</td>"
+			+"</tr>") ;
+}
 
-
-
-
+function nogood(){
+	alert("暂不开放此功能") ;
+	
+}
+function delmov(data){
+	alert("删除视频"+data) ;
+	$.ajax({
+		type : "GET" ,
+		url : "../Persional/delresource.action",
+		data : {
+			"jsonId" : data 
+		}, 
+		dataType : "JSON" ,
+		success:function(data){
+			alert(data) ;
+			console.log(data);
+			movies() ;
+		}
+	}) ;
+	
+}
+function delpic(data){
+	alert("删除图片"+data) ;
+	$.ajax({
+		type : "GET" ,
+		url : "../Persional/delresource.action",
+		data : {
+			"jsonId" : data 
+		}, 
+		dataType : "JSON" ,
+		success:function(data){
+			alert(data) ;
+			photos() ;
+		}
+	}) ;
+	
+}
 
 
 

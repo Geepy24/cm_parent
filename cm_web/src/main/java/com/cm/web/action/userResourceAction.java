@@ -105,16 +105,51 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 	}
 
 	/**
-	 * 首页跳转图片或视频列表
+	 * 首页跳转图片列表
 	 * 
 	 * @return
 	 */
-	@Action(value = "indexresource", results = { @Result(name = "picture", location = "/WEB-INF/jsp/picture.jsp"),
-			@Result(name = "movie", location = "/WEB-INF/jsp/movie.jsp") })
-	public String indexResource() {
-		System.out.println("进入用户资源视图");
-		tag = resource.getResTag();
-		System.out.println(tag);
+	@Action(value = "indexpictures", results = {
+			@Result(name = "picture", location = "/WEB-INF/jsp/picture.jsp"),
+		
+	})
+	public String indexPictures() {
+		System.out.println("进入图片列表视图");
+		tag = "pic" ;
+		currentPage = 1;
+		session.setAttribute("picOrmov", tag);
+		resources = resourceService.findAllResource(tag, currentPage, MAXRESULTS * 2);
+
+		// 加上页码
+		// 所有资源
+		Long totalItems = resourceService.AllResourceNumber(tag);
+		Long totalResource;
+
+		// 总页数
+		if (0 == totalItems) {
+			totalResource = new Long(1);
+		} else if (0 == totalItems % 10) {
+			totalResource = totalItems / 10;
+		} else {
+			totalResource = (totalItems / 10) + 1;
+		}
+		session.setAttribute("totalResource", totalResource);
+
+		
+		return "picture";
+
+	}
+
+	/**
+	 * 首页跳转视频列表
+	 */
+	@Action(value = "indexmovies", results = { 
+			@Result(name = "movie", location = "/WEB-INF/jsp/movie.jsp") 
+			
+	})
+	public String indexMovies() {
+		System.out.println("进入首页视频视图");
+		tag = "mov" ;
 		currentPage = 1;
 		session.setAttribute("picOrmov", tag);
 		resources = resourceService.findAllResource(tag, currentPage, MAXRESULTS * 2);
@@ -141,7 +176,15 @@ public class userResourceAction extends ActionSupport implements Serializable, M
 		return "picture";
 
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * 图片和视频资源详情
 	 * 

@@ -171,6 +171,12 @@ public class ResourceServiceImpl implements IResourceService {
 		return resourceDao.findAllPcsByUserId(userId);
 	}
 
+	@Override
+	public void updateResource(Resource resource) {
+		resourceDao.updateResource(resource);
+		
+	}
+
 	
 	
 	

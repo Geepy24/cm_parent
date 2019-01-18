@@ -91,6 +91,9 @@ public class loginAction extends ActionSupport {
 	 */
 	@Action(value="verifyLogin",results= {
 			@Result(name="success",location="/index.jsp"),
+			@Result(name="indexpictures",type="chain",location="indexpictures",params= {"namespace","/userResource"}),
+			@Result(name="indexmovies",type="chain",location="indexmovies",params= {"namespace","/userResource"})
+			//@Result(name="comein",type="chain",location="comein",params= {"namespace","/Persional"})
 			//@Result(name="picture",type="redirectAction",location="indexpic",params= {"namespace","/Resource"}),
 			//@Result(name="manager",type="redirectAction",location="management",params= {"namespace","/privateSource"})
 			//@Result(name="userPage",type="redirectAction",location="comein",params= {"namespace","/Persional"})
@@ -112,8 +115,18 @@ public class loginAction extends ActionSupport {
 			
 			//登录成功，把登录标记“loginInfo”存到session域中
 			session.setAttribute("loginInfo", user);
-		
-		
+			
+			//从哪来到哪去
+			StringBuffer url =  (StringBuffer) session.getAttribute("gowhere") ;
+			System.err.println(url);
+			if(url.indexOf("indexpictures.action") !=-1) {
+				return "indexpictures" ;
+			}
+			if(url.indexOf("indexmovies.action") !=-1) {
+				return "indexmovies" ;
+			}
+			
+			
 			return SUCCESS ;
 		
 		

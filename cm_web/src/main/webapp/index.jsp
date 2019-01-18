@@ -88,9 +88,9 @@
 			<div id="nav">
 				<span><a href="#">网站首页</a></span>
 				<span><a href="${pageContext.request.contextPath }/brief.jsp">球队简介</a></span>
-				<span><a href="${pageContext.request.contextPath }/userResource/indexresource.action?resTag=pic" target="_blank">精彩图集</a></span>
-				<span><a href="${pageContext.request.contextPath }/userResource/indexresource.action?resTag=mov" target="_blank">视频</a></span>
-				<span><a href="${pageContext.request.contextPath}/Persional/comein.action?userId=${loginInfo.userId}" target="_blank">个人页面</a></span>
+				<span><a href="${pageContext.request.contextPath }/userResource/indexpictures.action" >精彩图集</a></span>
+				<span><a href="${pageContext.request.contextPath }/userResource/indexmovies.action">视频</a></span>
+				<span><a href="${pageContext.request.contextPath}/Persional/comein.action?userId=${loginInfo.userId}" >个人页面</a></span>
 			</div>
 		</div>
 	</div> 
@@ -138,7 +138,7 @@
 		 	</div>
 	 </div>
 
-
+ <s:debug></s:debug>
 </body>
 	 
 	 
